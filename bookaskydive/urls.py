@@ -1,12 +1,11 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from courses import views as courses_views
 from tandems import views as tandems_views
-from experienced import views as experienced_views
 
 urlpatterns = [
-    path('tandems/', tandems_views.tandems, name='courses'),
-    path('courses/', courses_views.courses, name='courses'),
-    path('experienced/', experienced_views.experienced, name='experienced'),
+    path('', include('tandems.urls'), name='tandems_urls'),
+    path('', include('courses.urls'), name='courses_urls'),
+    path('', include('experienced.urls'), name="experienced_urls"),
     path('admin/', admin.site.urls),
 ]
