@@ -1,4 +1,8 @@
 from django.http import HttpResponse
+from django.views import generic
+from .models import JumpBooking
 
-def experienced(request):
-    return HttpResponse("Experienced")
+class PlaneList(generic.ListView):
+    queryset = JumpBooking.objects.all()
+    template_name = "experienced/index.html"
+    paginate_by = 6

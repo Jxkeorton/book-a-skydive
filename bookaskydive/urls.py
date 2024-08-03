@@ -5,7 +5,7 @@ from tandems import views as tandems_views
 
 urlpatterns = [
     path('', include('tandems.urls'), name='tandems_urls'),
-    path('', include('courses.urls'), name='courses_urls'),
-    path('', include('experienced.urls'), name="experienced_urls"),
+    path('course/', include('courses.urls'), name='courses_urls'),
+    path('user/', include('experienced.urls'), name="experienced_urls"),
     path('admin/', admin.site.urls),
 ]
