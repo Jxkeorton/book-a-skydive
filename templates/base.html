@@ -1,6 +1,9 @@
 {% load static %}
 
 {% url 'home' as home_url %}
+{% url 'account_login' as login_url %}
+{% url 'account_signup' as signup_url %}
+{% url 'account_logout' as logout_url %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,22 +17,36 @@
 </head>
 <body>
     <!-- Navigation -->
-     <nav>
+    <nav>
+        {% if user.is_authenticated %}
+            <li class="">
+                <a class="" aria-current="page" href="{% url 'account_logout' %}">Logout</a>
+            </li>
+        {% else %}
+            <li class="">
+                <a class="" aria-current="page"
+                    href="{% url 'account_signup' %}">Register</a>
+            </li>
+            <li class="">
+                <a class="" aria-current="page" href="{% url 'account_login' %}">Login</a>
+            </li>
+        {% endif %}
+    </nav>
 
-     </nav>
-
-     <main>
+    <main>
 
         {% block content %}
         <!-- Content Goes here -->
         {% endblock content %}
 
-     </main>
+    </main>
      
 
     <!-- Footer -->
-     <footer>
+    <footer>
 
-     </footer>
+    </footer>
+    <script src="{% static 'js/script.js' %}"></script>
+
 </body>
 </html>
