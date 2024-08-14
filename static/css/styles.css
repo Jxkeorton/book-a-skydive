@@ -1,3 +1,4 @@
+/* Make the entire page a flex container */
 html, body {
     height: 100%;
     margin: 0;
@@ -13,4 +14,11 @@ main {
 /* Ensure the footer is at the bottom */
 footer {
     flex-shrink: 0;
+}
+
+/* Optional: Give some padding to the footer to avoid sticking to the bottom of the viewport */
+footer {
+    padding: 1rem 0;
+    background-color: #343a40;
+    color: white;
 }
