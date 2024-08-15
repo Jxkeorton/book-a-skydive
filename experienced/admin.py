@@ -13,9 +13,9 @@ class JumpSlotAdmin(admin.ModelAdmin):
     ordering = ('-jump_date',)
 
 class JumpBookingAdmin(admin.ModelAdmin):
-    list_display = ('user', 'jump_slot', 'booking_date')
-    list_filter = ('jump_slot__plane', 'jump_slot__jump_date', 'booking_date')
-    search_fields = ('user__username', 'jump_slot__plane__name')
+    list_display = ('user', 'plane_departure', 'booking_date')
+    list_filter = ('plane_departure__plane', 'plane_departure__jump_date', 'booking_date')
+    search_fields = ('user__username', 'plane_departure__plane__name')
     ordering = ('-booking_date',)
 
 admin.site.register(Plane, PlaneAdmin)
