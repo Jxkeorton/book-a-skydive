@@ -1,12 +1,12 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-def tandems(request):
+def tandems_list(request):
     """
     Renders the Tandem page
     """
 
     return render(
         request,
-        "tandems/tandem.html",
+        template_name = "tandems/tandem.html",
     )

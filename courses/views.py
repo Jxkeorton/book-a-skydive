@@ -1,4 +1,11 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
-def courses(request):
-    return HttpResponse("Courses")
+def courses_list(request):
+    """
+    Renders the Tandem page
+    """
+
+    return render(
+        request,
+        template_name = "courses/courses.html",
+    )

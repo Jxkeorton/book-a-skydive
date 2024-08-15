@@ -1,10 +1,12 @@
 from django.contrib import admin
+from .views import home_views 
 from django.urls import path, include
 
 urlpatterns = [
-    path('', include('tandems.urls'), name='tandems_urls'),
-    path('course/', include('courses.urls'), name='courses_urls'),
-    path('sport/', include('experienced.urls'), name="experienced_urls"),
+    path('', home_views, name='home'),
     path('admin/', admin.site.urls),
     path("accounts/", include("allauth.urls")),
+    path('course/', include('courses.urls'), name='courses_urls'),
+    path('sport/', include('experienced.urls'), name="experienced_urls"),
+    path('tandems/', include('tandems.urls'), name='tandems_urls'),
 ]
