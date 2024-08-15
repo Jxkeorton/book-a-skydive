@@ -11,11 +11,11 @@ class Plane(models.Model):
 
 class JumpSlot(models.Model):
     plane = models.ForeignKey(Plane, on_delete=models.CASCADE)
-    jump_date = models.DateTimeField()
+    departure = models.DateTimeField()
     available_slots = models.IntegerField()
 
     def __str__(self):
-        return f"{self.plane.name} on {self.jump_date}"
+        return f"{self.plane.name} on {self.departure}"
 
 class JumpBooking(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -23,7 +23,7 @@ class JumpBooking(models.Model):
     booking_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} booked {self.plane_departure.plane.name} on {self.plane_departure.jump_date}"
+        return f"{self.user.username} booked {self.plane_departure.plane.name} on {self.plane_departure.departure}"
 
     # override the save method
     def save(self, *args, **kwargs):

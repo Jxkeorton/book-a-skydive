@@ -1,7 +1,7 @@
 from django.views import generic
-from .models import JumpBooking
+from .models import JumpSlot
 
 class PlaneList(generic.ListView):
-    queryset = JumpBooking.objects.all()
+    queryset = JumpSlot.objects.all()
     template_name = "experienced/index.html"
     paginate_by = 6

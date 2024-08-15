@@ -7,14 +7,14 @@ class PlaneAdmin(admin.ModelAdmin):
     ordering = ('name',)
 
 class JumpSlotAdmin(admin.ModelAdmin):
-    list_display = ('plane', 'jump_date', 'available_slots')
-    list_filter = ('plane', 'jump_date')
+    list_display = ('plane', 'departure', 'available_slots')
+    list_filter = ('plane', 'departure')
     search_fields = ('plane__name',)
-    ordering = ('-jump_date',)
+    ordering = ('-departure',)
 
 class JumpBookingAdmin(admin.ModelAdmin):
     list_display = ('user', 'plane_departure', 'booking_date')
-    list_filter = ('plane_departure__plane', 'plane_departure__jump_date', 'booking_date')
+    list_filter = ('plane_departure__plane', 'plane_departure__departure', 'booking_date')
     search_fields = ('user__username', 'plane_departure__plane__name')
     ordering = ('-booking_date',)
 
