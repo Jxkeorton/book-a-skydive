@@ -13,7 +13,7 @@
                         <strong>Departure:</strong> {{ booking.departure|date:"F j, Y, g:i a" }}<br>
                         <strong>Available Slots:</strong> {{ booking.available_slots }}
                     </p>
-                    <a href="#" class="btn btn-primary">Book Now</a>
+                    <a href="{% url 'plane_detail' booking.slug %}" class="btn btn-primary">Book Now</a>
                 </div>
             </div>
         </div>

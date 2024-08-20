@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2>{{ jump_slot.plane.name }} - Departure Details</h2>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Departure Date & Time:</h5>
+            <p class="card-text">{{ jump_slot.departure|date:"F d, Y H:i" }}</p>
+
+            <h5 class="card-title">Available Slots:</h5>
+            <p class="card-text">{{ jump_slot.available_slots }}</p>
+
+            <h5 class="card-title">Booked Users:</h5>
+            {% if users %}
+                <ul class="list-group">
+                    {% for user in users %}
+                        <li class="list-group-item">{{ user.username }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">No users have booked this jump yet.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'experienced' %}" class="btn btn-secondary">Back to Plane List</a>
+    </div>
+</div>
+{% endblock %}
