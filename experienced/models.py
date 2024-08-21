@@ -31,9 +31,22 @@ class JumpSlot(models.Model):
         super().save(*args, **kwargs)
 
 class JumpBooking(models.Model):
+    # Constants for jump types
+    TRACKING = 'TRACKING'
+    SOLO = 'SOLO'
+    AFF = 'AFF'  # Accelerated Freefall
+    WINGSUIT = 'WINGSUIT'
+
+    JUMP_TYPE_CHOICES = [
+        (TRACKING, 'Tracking Jump'),
+        (SOLO, 'Solo Jump'),
+        (AFF, 'Accelerated Freefall (AFF)'),
+        (WINGSUIT, 'Wingsuit Jump'),
+    ]
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     plane_departure = models.ForeignKey(JumpSlot, on_delete=models.CASCADE)
     booking_date = models.DateTimeField(auto_now_add=True)
+    jump_type = models.CharField(max_length=20, choices=JUMP_TYPE_CHOICES, default=SOLO)
 
     def __str__(self):
         return f"{self.user.username} booked {self.plane_departure.plane.name} on {self.plane_departure.departure}"
