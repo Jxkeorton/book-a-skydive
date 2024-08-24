@@ -32,7 +32,12 @@
         <div class="card-body">
             {% if user.is_authenticated %}
                 {% if user_has_booking %}
-                    <p class="text-success">You have already booked a slot on this jump.</p>
+                    <h4>Edit Your Booking:</h4>
+                    <form method="post" id="bookingForm" action="{% url 'edit_booking' existing_booking.id %}">
+                        {% csrf_token %}
+                        {{ form | crispy }}
+                        <button type="submit" id="submitButton" class="btn btn-warning">Update Booking</button>
+                    </form>
                 {% else %}
                     <h4>Book Your Slot:</h4>
                     <form method="post">
