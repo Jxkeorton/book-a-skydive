@@ -1,5 +1,5 @@
 from django.views import generic
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from .models import JumpSlot, JumpBooking
 from .forms import BookingForm
 from django.contrib import messages
@@ -64,3 +64,20 @@ def edit_booking(request, booking_id):
         form = BookingForm(instance=booking)
 
     return render(request, 'experienced/edit_booking.html', {'form': form, 'jump_slot': jump_slot})
+
+@login_required
+def delete_booking(request, booking_id):
+    """
+    View to delete a booking
+    """
+    booking = get_object_or_404(JumpBooking, id=booking_id)
+
+    # Check if the current user is the owner of the booking
+    if booking.user == request.user:
+        booking.delete()
+        messages.success(request, 'Booking deleted successfully!')
+    else:
+        messages.error(request, 'You can only delete your own bookings!')
+
+    # Redirect back to the plane detail page
+    return redirect(reverse('plane_detail', kwargs={'slug': booking.plane_departure.slug}))
