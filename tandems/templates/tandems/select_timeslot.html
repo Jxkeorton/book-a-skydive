@@ -1,11 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h2>Select a Time Slot for {{ day.date }}</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Next</button>
-  </form>
-  <a href="{% url 'select_day' %}" class="btn btn-secondary">Go Back</a>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm mt-5">
+        <div class="card-body">
+          <h2 class="text-center mb-4">Select a Time Slot for {{ day.date }}</h2>
+          <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-block mb-2">Next</button>
+              <a href="{% url 'select_day' %}" class="btn btn-secondary btn-block">Go Back</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
