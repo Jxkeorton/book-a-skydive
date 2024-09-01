@@ -4,11 +4,19 @@ from .models import JumpSlot, JumpBooking
 from .forms import BookingForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class PlaneList(generic.ListView):
+class PlaneList(LoginRequiredMixin, generic.ListView):
     queryset = JumpSlot.objects.all()
     template_name = "experienced/index.html"
     paginate_by = 6
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_bookings = JumpBooking.objects.filter(user=self.request.user)
+        booked_slots = user_bookings.values_list('plane_departure__id', flat=True)
+        context['booked_slots'] = booked_slots
+        return context
     
 @login_required
 def plane_detail(request, slug):
