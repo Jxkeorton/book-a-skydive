@@ -1,0 +1,13 @@
+<!-- tandems/templates/tandems/booking_confirmation.html -->
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Booking Confirmation</h2>
+  <p>Thank you for booking a tandem jump!</p>
+  <p><strong>Date:</strong> {{ booking.timeslot.day.date }}</p>
+  <p><strong>Time:</strong> {{ booking.timeslot.time }}</p>
+  <p><strong>Number of Tandems:</strong> {{ booking.number_of_tandems }}</p>
+
+  <a href="{% url 'home' %}" class="btn btn-primary">Go to Home</a>
+  <a href="{% url 'select_day' %}" class="btn btn-secondary">Book Another Tandem</a>
+{% endblock %}

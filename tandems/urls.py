@@ -2,5 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.tandems_list, name='tandems_list'),  # Example URL pattern
+    path('select-day/', views.select_day, name='select_day'),
+    path('select-timeslot/<date>/', views.select_timeslot, name='select_timeslot'),
+    path('booking-success/', views.booking_success, name='booking_success'),
 ]
