@@ -1,11 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h2>Select a Course</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Next</button>
-  </form>
+  <div class="container">
+    <h2 class="text-center my-4">Available AFF Courses</h2>
+    
+    <div class="row justify-content-center">
+      {% for course in courses %}
+      <div class="col-md-4 col-lg-3 mb-4">
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <h3>AFF Course on {{ course.date }}</h3>
+            <p>Available Slots: {{ course.available_slots }}</p>
+            <a href="{% url 'course_visitor_details' course.id %}" class="btn btn-primary">Book Now</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
 
+    <div class="row justify-content-center">
+      <div class="col-auto">
+        <div class="pagination">
+          <span class="step-links">
+            {% if page_obj.has_previous %}
+              <a href="{% url 'list_courses' %}?page=1">&laquo; first</a>
+              <a href="{% url 'list_courses' %}?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+            <span class="current">
+              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+            {% if page_obj.has_next %}
+              <a href="{% url 'list_courses' %}?page={{ page_obj.next_page_number }}">next</a>
+              <a href="{% url 'list_courses' %}?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

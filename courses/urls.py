@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.list_courses, name='list_courses'),  # List available AFF courses
-    path('visitor_details/', views.visitor_details, name='visitor_details'),  # Page for entering visitor details
-    path('booking_success/', views.booking_success, name='course_booking_success'),  # Booking success page
+    path('', views.CoursesList.as_view(), name='list_courses'),
+    path('visitor_details/<int:course_id>/', views.visitor_details, name='course_visitor_details'),
+    path('booking_success/', views.booking_success, name='booking_success'),
 ]

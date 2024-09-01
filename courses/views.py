@@ -1,28 +1,29 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views import generic
 from django.db.models import F
 from .models import AFFCourse
-from .forms import CourseSelectForm, VisitorDetailForm
+from .forms import VisitorDetailForm
 from django.contrib import messages
 
-def list_courses(request):
-    courses = AFFCourse.objects.filter(booked_slots__lt=F('max_slots')).order_by('date')
-    form = CourseSelectForm(courses=courses)
+class CoursesList(generic.ListView):
+    model = AFFCourse
+    template_name = "courses/list_courses.html"
+    context_object_name = 'courses'
+    paginate_by = 6
 
-    if request.method == 'POST':
-        form = CourseSelectForm(courses=courses, data=request.POST)
-        if form.is_valid():
-            course = form.cleaned_data['course']
-            request.session['selected_course_id'] = course.id
-            return redirect('visitor_details')
+    def get_queryset(self):
+        return AFFCourse.objects.filter(booked_slots__lt=F('max_slots')).order_by('date')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        for course in context['object_list']:
+            course.available_slots = course.max_slots - course.booked_slots
+        return context
 
-    return render(request, 'courses/list_courses.html', {'form': form, 'courses': courses})
-
-def visitor_details(request):
-    course_id = request.session.get('selected_course_id')
-    if not course_id:
-        return redirect('list_courses')
-
+def visitor_details(request, course_id):
     course = get_object_or_404(AFFCourse, id=course_id)
+    
+    print(f"Course Retrieved: {course.date}")
 
     if request.method == 'POST':
         form = VisitorDetailForm(request.POST)
@@ -31,14 +32,13 @@ def visitor_details(request):
             visitor_detail.course = course
             visitor_detail.save()
             course.booked_slots += 1
-            course.save()  
-            del request.session['selected_course_id']  # Clear the session data
+            course.save()  # Update the course after booking is confirmed
             messages.success(request, f'Booking confirmed for {course.date}')
-            return redirect('course_booking_success')
+            return redirect('booking_success')
     else:
         form = VisitorDetailForm()
 
-    return render(request, 'courses/details.html', {'form': form, 'course': course})
+    return render(request, 'courses/details.html', {'form': form, 'date': course.date})
 
 def booking_success(request):
     return render(request, 'courses/booking_success.html')
