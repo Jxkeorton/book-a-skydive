@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Enter Your Details for the Course on {{ course.date }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Confirm Booking</button>
+  </form>
+  <a href="{% url 'list_courses' %}" class="btn btn-secondary">Go Back</a>
+{% endblock %}
