@@ -2,6 +2,7 @@
 
 {% block content %}
 <div class="container my-4">
+    <h2>Plane departures</h2>
     <div class="row">
         {% for booking in object_list %}
         <div class="col-md-4 mb-4">
@@ -25,30 +26,24 @@
     </div>
 
     <!-- Pagination Controls -->
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            {% if is_paginated %}
-                {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                {% endif %}
-
-                <li class="page-item disabled">
-                    <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-                </li>
-
-                {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-                {% endif %}
-            {% endif %}
-        </ul>
-    </nav>
+    <div class="row justify-content-center">
+        <div class="col-auto">
+          <div class="pagination">
+            <span class="step-links">
+              {% if page_obj.has_previous %}
+                <a href="{% url 'experienced' %}?page=1">&laquo; first</a>
+                <a href="{% url 'experienced' %}?page={{ page_obj.previous_page_number }}">previous</a>
+              {% endif %}
+              <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+              </span>
+              {% if page_obj.has_next %}
+                <a href="{% url 'experienced' %}?page={{ page_obj.next_page_number }}">next</a>
+                <a href="{% url 'experienced' %}?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+              {% endif %}
+            </span>
+          </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

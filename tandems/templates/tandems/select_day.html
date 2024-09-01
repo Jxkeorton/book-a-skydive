@@ -1,22 +1,33 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content %}
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
-      <div class="card shadow-sm mt-5">
-        <div class="card-body">
-          <h2 class="text-center mb-4">Select a Day for Your Tandem Jump</h2>
-          <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <div class="d-grid">
-              <button type="submit" class="btn btn-primary btn-block">Next</button>
-            </div>
-          </form>
+<!-- Hero Section -->
+<section class="hero bg-light py-5" style="background-image: url('{% static 'images/4.webp' %}'); background-size: cover; background-position: center;">
+  <div class="hero-overlay py-5 mx-5" style="background-color: rgba(0, 0, 0, 0.5);">
+    <div class="container text-center text-white">
+      <h1 class="display-4 mb-4 fw-bold">Experience the Thrill of Skydiving!</h1>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm mt-5">
+          <div class="card-body">
+            <h2 class="text-center mb-4 fw-bold">Select a Day for Your Tandem Jump</h2>
+            <form method="post">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-block">Next</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
+
 {% endblock %}
