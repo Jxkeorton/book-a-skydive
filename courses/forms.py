@@ -1,18 +1,13 @@
 from django import forms
-from django.db.models import F
 from .models import AFFCourse, VisitorDetail
 
-class DaySelectForm(forms.Form):
-    date = forms.DateField(widget=forms.SelectDateWidget)
-
 class CourseSelectForm(forms.Form):
+    course = forms.ModelChoiceField(queryset=AFFCourse.objects.none(), empty_label=None)
+
     def __init__(self, *args, **kwargs):
-        date = kwargs.pop('date')
+        courses = kwargs.pop('courses', AFFCourse.objects.none())
         super().__init__(*args, **kwargs)
-        self.fields['course'] = forms.ModelChoiceField(
-            queryset=AFFCourse.objects.filter(date=date, booked_slots__lt=F('max_slots')),
-            empty_label="Select a Course"
-        )
+        self.fields['course'].queryset = courses
 
 class VisitorDetailForm(forms.ModelForm):
     class Meta:
