@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
 
 class TandemDay(models.Model):
     date = models.DateField(unique=True)
@@ -36,3 +37,14 @@ class TandemTimeSlot(models.Model):
     @property
     def slots_available(self):
         return self.max_tandems > self.booked_tandems
+
+class VisitorDetail(models.Model):
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=15)
+    weight = models.PositiveIntegerField(validators=[MinValueValidator(0)])
+    height = models.PositiveIntegerField(validators=[MinValueValidator(0)])
+    full_name = models.CharField(max_length=100)
+    timeslot = models.ForeignKey('TandemTimeSlot', related_name='visitor_details', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.full_name} - {self.email}'
