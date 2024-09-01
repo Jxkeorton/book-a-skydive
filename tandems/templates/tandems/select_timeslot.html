@@ -1,4 +1,3 @@
-<!-- tandems/templates/tandems/select_timeslot.html -->
 {% extends "base.html" %}
 
 {% block content %}
@@ -6,7 +5,7 @@
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Confirm Booking</button>
+    <button type="submit" class="btn btn-primary">Next</button>
   </form>
   <a href="{% url 'select_day' %}" class="btn btn-secondary">Go Back</a>
 {% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-4">
+    <h2>Book a Tandem Jump</h2>
+    <h4>Selected Time Slot: {{ timeslot.time }} on {{ timeslot.day.date }}</h4>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit Booking</button>
+    </form>
+</div>
+{% endblock %}

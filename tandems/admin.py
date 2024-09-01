@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import TandemDay, TandemTimeSlot
+from .models import TandemDay, TandemTimeSlot, VisitorDetail
 
 @admin.register(TandemDay)
 class TandemDayAdmin(admin.ModelAdmin):
@@ -14,3 +14,10 @@ class TandemTimeSlotAdmin(admin.ModelAdmin):
     list_filter = ('day', 'time',)
     search_fields = ('day__date', 'time')
     readonly_fields = ('slots_available',)
+    
+@admin.register(VisitorDetail)
+class VisitorDetailAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'email', 'phone_number', 'weight', 'height', 'timeslot')
+    list_filter = ('timeslot', 'email',)
+    search_fields = ('full_name', 'email', 'phone_number',)
+    readonly_fields = ('email', 'phone_number', 'weight', 'height', 'timeslot')
