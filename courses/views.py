@@ -15,7 +15,7 @@ def list_courses(request):
             request.session['selected_course_id'] = course.id
             return redirect('visitor_details')
 
-    return render(request, 'tandems/list_courses.html', {'form': form, 'courses': courses})
+    return render(request, 'courses/list_courses.html', {'form': form, 'courses': courses})
 
 def visitor_details(request):
     course_id = request.session.get('selected_course_id')
@@ -31,14 +31,14 @@ def visitor_details(request):
             visitor_detail.course = course
             visitor_detail.save()
             course.booked_slots += 1
-            course.save()  # Update the course after booking is confirmed
+            course.save()  
             del request.session['selected_course_id']  # Clear the session data
             messages.success(request, f'Booking confirmed for {course.date}')
-            return redirect('booking_success')
+            return redirect('course_booking_success')
     else:
         form = VisitorDetailForm()
 
-    return render(request, 'tandems/details.html', {'form': form, 'course': course})
+    return render(request, 'courses/details.html', {'form': form, 'course': course})
 
 def booking_success(request):
-    return render(request, 'tandems/booking_success.html')
+    return render(request, 'courses/booking_success.html')
