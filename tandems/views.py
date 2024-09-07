@@ -4,6 +4,7 @@ from django.db.models import F
 from .models import TandemDay, TandemTimeSlot
 from .forms import DaySelectForm, TimeSlotSelectForm, VisitorDetailForm
 
+
 def select_day(request):
     form = DaySelectForm()
     if request.method == 'POST':
@@ -13,6 +14,7 @@ def select_day(request):
             return redirect('select_timeslot', date=selected_day)
     return render(request, 'tandems/select_day.html', {'form': form})
 
+
 def select_timeslot(request, date):
     day = get_object_or_404(TandemDay, date=date)
     timeslots = day.timeslots.filter(booked_tandems__lt=F('max_tandems'))
@@ -21,18 +23,23 @@ def select_timeslot(request, date):
         form = TimeSlotSelectForm(day, request.POST)
         if form.is_valid():
             timeslot = form.cleaned_data['timeslot']
-            request.session['selected_timeslot_id'] = timeslot.id  # Store the selected timeslot in the session
+            request.session['selected_timeslot_id'] = timeslot.id
             return redirect('visitor_details')
 
     else:
         form = TimeSlotSelectForm(day)
 
-    return render(request, 'tandems/select_timeslot.html', {'day': day, 'form': form, 'timeslots': timeslots})
+    return render(
+        request,
+        'tandems/select_timeslot.html',
+        {'day': day, 'form': form, 'timeslots': timeslots}
+    )
+
 
 def visitor_details(request):
     timeslot_id = request.session.get('selected_timeslot_id')
     if not timeslot_id:
-        return redirect('select_day')  # If no timeslot in session, redirect to select day
+        return redirect('select_day')
 
     timeslot = get_object_or_404(TandemTimeSlot, id=timeslot_id)
 
@@ -44,13 +51,21 @@ def visitor_details(request):
             visitor_detail.save()
             timeslot.booked_tandems += 1
             timeslot.save()  # Update the timeslot after booking is confirmed
-            del request.session['selected_timeslot_id']  # Clear the session data
-            messages.success(request, f'Booking confirmed for {timeslot.time} on {timeslot.day.date}')
+            del request.session['selected_timeslot_id']
+            messages.success(
+                request,
+                f'Booking confirmed for {timeslot.time} on {timeslot.day.date}'
+            )
             return redirect('booking_success')
     else:
         form = VisitorDetailForm()
 
-    return render(request, 'tandems/details.html', {'form': form, 'timeslot': timeslot})
+    return render(
+        request,
+        'tandems/details.html',
+        {'form': form, 'timeslot': timeslot}
+    )
+
 
 def booking_success(request):
     return render(request, 'tandems/booking_success.html')

@@ -6,34 +6,39 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import JumpSlot, JumpBooking
 from .forms import BookingForm
 
+
 class PlaneList(LoginRequiredMixin, generic.ListView):
     queryset = JumpSlot.objects.all()
     template_name = "experienced/index.html"
     paginate_by = 6
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user_bookings = JumpBooking.objects.filter(user=self.request.user)
-        booked_slots = user_bookings.values_list('plane_departure__id', flat=True)
+        booked_slots = user_bookings.values_list(
+                            'plane_departure__id', flat=True
+                        )
         context['booked_slots'] = booked_slots
         return context
-    
+
+
 @login_required
 def plane_detail(request, slug):
     jump_slot = get_object_or_404(JumpSlot, slug=slug)
     users = jump_slot.users.all()
-    
-     # Check if the current user has a booking for this plane
-    existing_booking = JumpBooking.objects.filter(user=request.user, plane_departure=jump_slot).first()
+
+    existing_booking = JumpBooking.objects.filter(
+                            user=request.user, plane_departure=jump_slot
+                        ).first()
     user_has_booking = existing_booking is not None
-    
+
     if request.method == "POST":
-        # Use the existing booking instance if available, or create a new one
+
         form = BookingForm(request.POST, instance=existing_booking)
         if form.is_valid():
             booking = form.save(commit=False)
-            booking.user = request.user  # Set the current logged-in user
-            booking.plane_departure = jump_slot  # Automatically set the plane departure
+            booking.user = request.user
+            booking.plane_departure = jump_slot
             booking.save()
 
             if user_has_booking:
@@ -56,7 +61,8 @@ def plane_detail(request, slug):
             'existing_booking': existing_booking
         },
     )
-    
+
+
 @login_required
 def edit_booking(request, booking_id):
     booking = get_object_or_404(JumpBooking, id=booking_id, user=request.user)
@@ -71,7 +77,12 @@ def edit_booking(request, booking_id):
     else:
         form = BookingForm(instance=booking)
 
-    return render(request, 'experienced/edit_booking.html', {'form': form, 'jump_slot': jump_slot})
+    return render(
+        request,
+        'experienced/edit_booking.html',
+        {'form': form, 'jump_slot': jump_slot}
+    )
+
 
 @login_required
 def delete_booking(request, booking_id):
@@ -88,4 +99,8 @@ def delete_booking(request, booking_id):
         messages.error(request, 'You can only delete your own bookings!')
 
     # Redirect back to the plane detail page
-    return redirect(reverse('plane_detail', kwargs={'slug': booking.plane_departure.slug}))
+    return redirect(
+        reverse(
+            'plane_detail',
+            kwargs={'slug': booking.plane_departure.slug})
+        )
