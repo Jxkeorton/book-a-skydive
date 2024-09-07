@@ -101,6 +101,43 @@ footer {
     color: #333; 
 }
 
+/* home page image links */
+/* Ensure the image-wrapper takes full width */
+.image-wrapper {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.text-overlay {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.image-wrapper:hover {
+    transform: scale(1.05);
+}
+
+.image-background {
+    background-color: #dc1c84;
+    width: 100%;
+}
+
 
 
 

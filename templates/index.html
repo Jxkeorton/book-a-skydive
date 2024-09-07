@@ -1,5 +1,39 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-<h2>Home</h2>
+<section class="hero bg-light py-5" style="background-image: url('{% static 'images/G0047881.webp' %}'); background-size: cover; background-position: center; height: 70vh;">
+    <div class="hero-content">
+        <h1 class="display-4 mb-4 fw-bold">Welcome to Book a Skydive!</h1>
+        <p>Where dreams come true</p>
+    </div>
+</section>
+
+<div class="image-background p-5">
+    <div class="row">
+        <!-- Image 1 -->
+        <div class="col-md-4 mb-4">
+            <a href="{% url 'select_day' %}" class="d-block image-wrapper">
+                <img src="{% static 'images/4.webp' %}" class="img-fluid" alt="Image 1">
+                <div class="text-overlay">Tandem Skydive</div>
+            </a>
+        </div>
+
+        <!-- Image 2 -->
+        <div class="col-md-4 mb-4">
+            <a href="{% url 'list_courses' %}" class="d-block image-wrapper">
+                <img src="{% static 'images/geek 2.webp' %}" class="img-fluid" alt="Image 2">
+                <div class="text-overlay">Learn To Skydive</div>
+            </a>
+        </div>
+
+        <!-- Image 3 -->
+        <div class="col-md-4 mb-4">
+            <a href="{% url 'experienced' %}" class="d-block image-wrapper">
+                <img src="{% static 'images/exit shot 3.webp' %}" class="img-fluid" alt="Image 3">
+                <div class="text-overlay">Experienced Skydivers</div>
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock %}
