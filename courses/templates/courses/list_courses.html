@@ -1,6 +1,18 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
+  <!-- Hero Section -->
+  <section class="hero bg-light py-5" style="background-image: url('{% static 'images/exit shot 3.webp' %}'); background-size: cover; background-position: center; height: 70vh;">
+
+    <div class="hero-content">
+      <h1 class="display-4 mb-4 fw-bold">Ready to take the leap!</h1>
+      <p>Book your Skydiving course here!</p>
+
+    </div>
+  </section>
+
+  
   <div class="container">
     <h2 class="text-center my-4">Available AFF Courses</h2>
     
@@ -18,7 +30,7 @@
       {% endfor %}
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-5">
       <div class="col-auto">
         <div class="pagination">
           <span class="step-links">

@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.db.models import F
+from django.contrib import messages
 from .models import AFFCourse
 from .forms import VisitorDetailForm
-from django.contrib import messages
 
 class CoursesList(generic.ListView):
     model = AFFCourse
@@ -23,8 +23,6 @@ class CoursesList(generic.ListView):
 def visitor_details(request, course_id):
     course = get_object_or_404(AFFCourse, id=course_id)
     
-    print(f"Course Retrieved: {course.date}")
-
     if request.method == 'POST':
         form = VisitorDetailForm(request.POST)
         if form.is_valid():

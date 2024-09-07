@@ -1,5 +1,5 @@
 from django import forms
-from .models import JumpBooking, JumpSlot
+from .models import JumpBooking
 
 class BookingForm(forms.ModelForm):
     class Meta:

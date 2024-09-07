@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import TandemDay, TandemTimeSlot
-from .forms import DaySelectForm, TimeSlotSelectForm, VisitorDetailForm
 from django.contrib import messages
 from django.db.models import F
+from .models import TandemDay, TandemTimeSlot
+from .forms import DaySelectForm, TimeSlotSelectForm, VisitorDetailForm
 
 def select_day(request):
     form = DaySelectForm()

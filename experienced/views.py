@@ -1,10 +1,10 @@
 from django.views import generic
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-from .models import JumpSlot, JumpBooking
-from .forms import BookingForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import JumpSlot, JumpBooking
+from .forms import BookingForm
 
 class PlaneList(LoginRequiredMixin, generic.ListView):
     queryset = JumpSlot.objects.all()
