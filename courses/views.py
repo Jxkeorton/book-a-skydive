@@ -62,9 +62,9 @@ def visitor_details(request, course_id):
             visitor_detail.course = course
             visitor_detail.save()
             course.booked_slots += 1
-            course.save()  # Update the course after booking is confirmed
+            course.save()
             messages.success(request, f'Booking confirmed for {course.date}')
-            return redirect('booking_success')
+            return redirect('course_booking_success')
     else:
         form = VisitorDetailForm()
 
