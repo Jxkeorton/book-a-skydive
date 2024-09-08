@@ -9,27 +9,30 @@ from .forms import BookingForm
 
 class PlaneList(LoginRequiredMixin, generic.ListView):
     """
-    View for listing available jump slots.
-
-    Requires the user to be logged in. Displays a paginated list of jump slots with
-    a context variable indicating which slots the user has already booked.
+    View for listing available jump slots grouped by date.
     """
-    queryset = JumpSlot.objects.all()
     template_name = "experienced/index.html"
     paginate_by = 6
 
-    def get_context_data(self, **kwargs):
-        """
-        Add booked slots to the context to indicate which slots the user has booked.
+    def get_queryset(self):
+        return JumpSlot.objects.all()
 
-        Retrieves the user's bookings and adds them to the context.
-        """
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user_bookings = JumpBooking.objects.filter(user=self.request.user)
-        booked_slots = user_bookings.values_list(
-                            'plane_departure__id', flat=True
-                        )
+        booked_slots = user_bookings.values_list('plane_departure__id', flat=True)
+
+        # Group slots by date
+        slots = self.get_queryset()
+        grouped_slots = {}
+        for slot in slots:
+            date = slot.departure.date()
+            if date not in grouped_slots:
+                grouped_slots[date] = []
+            grouped_slots[date].append(slot)
+
         context['booked_slots'] = booked_slots
+        context['slots_by_date'] = grouped_slots
         return context
 
 

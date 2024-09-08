@@ -1,30 +1,35 @@
+<!-- plane_list.html -->
 {% extends "base.html" %}
 
 {% block content %}
 <div class="container my-4">
-    <h2>Plane departures</h2>
+  <h2 class="text-center">Plane departures</h2>
+    
+    {% for date, slots in slots_by_date.items %}
+    <h3>{{ date|date:"F d, Y" }}</h3>
     <div class="row">
-        {% for booking in object_list %}
+        {% for slot in slots %}
         <div class="col-md-4 mb-4">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">{{ booking.plane.name }}</h5>
+                    <h5 class="card-title">{{ slot.departure|date:"g:i a" }}</h5>
                     <p class="card-text">
-                        <strong>Plane Capacity:</strong> {{ booking.plane.capacity }}<br>
-                        <strong>Departure:</strong> {{ booking.departure|date:"F j, Y, g:i a" }}<br>
-                        <strong>Available Slots:</strong> {{ booking.available_slots }}
+                        <strong>Plane Capacity:</strong> {{ slot.plane.capacity }}<br>
+                        <strong>Plane Name:</strong> {{ slot.plane.name }}<br>
+                        <strong>Available Slots:</strong> {{ slot.available_slots }}
                     </p>
-                    {% if booking.id in booked_slots %}
-                        <a href="{% url 'plane_detail' booking.slug %}" class="btn btn-secondary">Update Booking</a>
+                    {% if slot.id in booked_slots %}
+                        <a href="{% url 'plane_detail' slot.slug %}" class="btn btn-secondary">Update Booking</a>
                     {% else %}
-                        <a href="{% url 'plane_detail' booking.slug %}" class="btn btn-primary">Book Now</a>
+                        <a href="{% url 'plane_detail' slot.slug %}" class="btn btn-primary">Book Now</a>
                     {% endif %}
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
-
+    {% endfor %}
+    
     <!-- Pagination Controls -->
     <div class="row justify-content-center">
         <div class="col-auto">
