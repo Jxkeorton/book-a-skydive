@@ -4,6 +4,11 @@ from .models import TandemDay, TandemTimeSlot, VisitorDetail
 
 @admin.register(TandemDay)
 class TandemDayAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for the TandemDay model.
+
+    Displays and configures the admin interface for managing TandemDay instances.
+    """
     list_display = ('date', 'max_tandems', 'total_booked', 'slots_available')
     list_filter = ('date',)
     search_fields = ('date',)
@@ -12,6 +17,11 @@ class TandemDayAdmin(admin.ModelAdmin):
 
 @admin.register(TandemTimeSlot)
 class TandemTimeSlotAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for the TandemTimeSlot model.
+
+    Displays and configures the admin interface for managing TandemTimeSlot instances.
+    """
     list_display = (
         'day',
         'time',
@@ -26,6 +36,11 @@ class TandemTimeSlotAdmin(admin.ModelAdmin):
 
 @admin.register(VisitorDetail)
 class VisitorDetailAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for the VisitorDetail model.
+
+    Displays and configures the admin interface for managing VisitorDetail instances.
+    """
     list_display = (
         'full_name',
         'email',

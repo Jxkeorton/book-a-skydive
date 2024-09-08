@@ -8,11 +8,22 @@ from .forms import BookingForm
 
 
 class PlaneList(LoginRequiredMixin, generic.ListView):
+    """
+    View for listing available jump slots.
+
+    Requires the user to be logged in. Displays a paginated list of jump slots with
+    a context variable indicating which slots the user has already booked.
+    """
     queryset = JumpSlot.objects.all()
     template_name = "experienced/index.html"
     paginate_by = 6
 
     def get_context_data(self, **kwargs):
+        """
+        Add booked slots to the context to indicate which slots the user has booked.
+
+        Retrieves the user's bookings and adds them to the context.
+        """
         context = super().get_context_data(**kwargs)
         user_bookings = JumpBooking.objects.filter(user=self.request.user)
         booked_slots = user_bookings.values_list(
@@ -24,6 +35,12 @@ class PlaneList(LoginRequiredMixin, generic.ListView):
 
 @login_required
 def plane_detail(request, slug):
+    """
+    View for displaying details of a specific jump slot and managing bookings.
+
+    Shows the details of a jump slot, including users who have booked it. Allows
+    the logged-in user to create or update their booking for the slot.
+    """
     jump_slot = get_object_or_404(JumpSlot, slug=slug)
     users = jump_slot.users.all()
 
@@ -33,7 +50,6 @@ def plane_detail(request, slug):
     user_has_booking = existing_booking is not None
 
     if request.method == "POST":
-
         form = BookingForm(request.POST, instance=existing_booking)
         if form.is_valid():
             booking = form.save(commit=False)
@@ -65,6 +81,11 @@ def plane_detail(request, slug):
 
 @login_required
 def edit_booking(request, booking_id):
+    """
+    View for editing an existing booking.
+
+    Allows the user to modify their booking details for a specific jump slot.
+    """
     booking = get_object_or_404(JumpBooking, id=booking_id, user=request.user)
     jump_slot = booking.plane_departure
 
@@ -87,7 +108,10 @@ def edit_booking(request, booking_id):
 @login_required
 def delete_booking(request, booking_id):
     """
-    View to delete a booking
+    View to delete a booking.
+
+    Allows the user to delete their own booking. Redirects to the plane detail page
+    after deletion.
     """
     booking = get_object_or_404(JumpBooking, id=booking_id)
 
