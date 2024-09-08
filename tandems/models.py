@@ -66,7 +66,8 @@ class TandemTimeSlot(models.Model):
 
     def __str__(self):
         """
-        Returns a string representation of the time slot in 'YYYY-MM-DD at HH:MM' format.
+        Returns a string representation of the time slot
+        in 'YYYY-MM-DD at HH:MM' format.
         """
         return f'{self.day.date} at {self.time}'
 
@@ -82,7 +83,8 @@ class VisitorDetail(models.Model):
     """
     Represents details of a visitor booking a tandem jump.
 
-    Stores information about the visitor's contact details, physical attributes,
+    Stores information about the visitor's contact details,
+    physical attributes,
     and the time slot they have booked. Includes a method to return a string
     representation of the visitor's details.
     """

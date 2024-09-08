@@ -6,8 +6,7 @@ from .models import TandemDay, TandemTimeSlot, VisitorDetail
 class DaySelectForm(forms.Form):
     """
     Form for selecting a day for a tandem jump.
-
-    Filters TandemDay objects to only include those with available time slots 
+    Filters TandemDay objects to only include those with available time slots
     (i.e., where the number of booked tandems is less than the maximum).
     """
     date = forms.ModelChoiceField(
@@ -35,10 +34,12 @@ class TimeSlotSelectForm(forms.Form):
 
     def __init__(self, day, *args, **kwargs):
         """
-        Initializes the form with a specific day's time slots and sets a custom label
+        Initializes the form with a specific day's
+        time slots and sets a custom label
         for the timeslot field.
 
-        :param day: The TandemDay instance for which time slots are to be filtered.
+        :param day: The TandemDay instance for which time
+        slots are to be filtered.
         """
         super().__init__(*args, **kwargs)
         self.fields['timeslot'].queryset = TandemTimeSlot.objects.filter(

@@ -10,7 +10,8 @@ class Plane(models.Model):
 
     Attributes:
         name (str): The name of the plane.
-        capacity (int): The maximum number of jumpers the plane can accommodate.
+        capacity (int):
+        The maximum number of jumpers the plane can accommodate.
     """
     name = models.CharField(max_length=200)
     capacity = models.IntegerField()
@@ -27,7 +28,8 @@ class JumpSlot(models.Model):
         plane (Plane): The plane assigned for the jump.
         departure (DateTimeField): The scheduled time for the jump.
         available_slots (int): The number of available spots for jumpers.
-        slug (SlugField): A unique slug generated based on the plane name and a count.
+        slug (SlugField):
+        A unique slug generated based on the plane name and a count.
         users (ManyToManyField): Users who have booked this jump slot.
     """
     plane = models.ForeignKey(Plane, on_delete=models.CASCADE)
@@ -44,7 +46,8 @@ class JumpSlot(models.Model):
     def save(self, *args, **kwargs):
         """
         Override the save method to generate a unique slug if it doesn't exist.
-        The slug is based on the plane's name and a count of jump slots for that plane.
+        The slug is based on the plane's name and
+        a count of jump slots for that plane.
         """
         if not self.slug:
             count = JumpSlot.objects.filter(plane=self.plane).count() + 1
@@ -62,16 +65,17 @@ class JumpBooking(models.Model):
         user (User): The user who made the booking.
         plane_departure (JumpSlot): The specific jump slot booked.
         booking_date (DateTimeField): The date the booking was made.
-        jump_type (str): The type of jump booked, with available choices (Tracking, Solo, AFF, Wingsuit).
+        jump_type (str): The type of jump booked,
+        with available choices (Tracking, Solo, AFF, Wingsuit).
     """
-    
+
     JUMP_TYPE_CHOICES = [
         ('TRACKING', 'Tracking Jump'),
         ('SOLO', 'Solo Jump'),
         ('AFF', 'Accelerated Freefall (AFF)'),
         ('WINGSUIT', 'Wingsuit Jump'),
     ]
-    
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE
     )
@@ -89,7 +93,8 @@ class JumpBooking(models.Model):
 
     def save(self, *args, **kwargs):
         """
-        Override the save method to decrease available slots by one when a booking is created.
+        Override the save method to decrease available
+        slots by one when a booking is created.
         Raises a ValueError if there are no available slots left.
         """
         if not self.pk:  # Only decrease slots on new bookings
@@ -103,7 +108,8 @@ class JumpBooking(models.Model):
 
     def delete(self, *args, **kwargs):
         """
-        Override the delete method to increase available slots by one when a booking is deleted.
+        Override the delete method to increase available slots
+        by one when a booking is deleted.
         """
         self.plane_departure.available_slots = F('available_slots') + 1
         self.plane_departure.users.remove(self.user)

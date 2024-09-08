@@ -7,7 +7,8 @@ class TandemDayAdmin(admin.ModelAdmin):
     """
     Admin configuration for the TandemDay model.
 
-    Displays and configures the admin interface for managing TandemDay instances.
+    Displays and configures the admin interface
+    for managing TandemDay instances.
     """
     list_display = ('date', 'max_tandems', 'total_booked', 'slots_available')
     list_filter = ('date',)
@@ -20,7 +21,8 @@ class TandemTimeSlotAdmin(admin.ModelAdmin):
     """
     Admin configuration for the TandemTimeSlot model.
 
-    Displays and configures the admin interface for managing TandemTimeSlot instances.
+    Displays and configures the admin interface
+    for managing TandemTimeSlot instances.
     """
     list_display = (
         'day',
@@ -39,7 +41,8 @@ class VisitorDetailAdmin(admin.ModelAdmin):
     """
     Admin configuration for the VisitorDetail model.
 
-    Displays and configures the admin interface for managing VisitorDetail instances.
+    Displays and configures the admin interface
+    for managing VisitorDetail instances.
     """
     list_display = (
         'full_name',

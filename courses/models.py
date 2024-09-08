@@ -9,8 +9,10 @@ class AFFCourse(models.Model):
 
     Attributes:
         date (DateField): The date the course is scheduled for. Must be unique.
-        max_slots (PositiveIntegerField): The maximum number of participants allowed.
-        booked_slots (PositiveIntegerField): The number of participants already booked.
+        max_slots (PositiveIntegerField):
+        The maximum number of participants allowed.
+        booked_slots (PositiveIntegerField):
+        The number of participants already booked.
     """
     date = models.DateField(unique=True)
     max_slots = models.PositiveIntegerField(default=6)
@@ -24,23 +26,27 @@ class AFFCourse(models.Model):
         Custom validation to ensure:
         1. The course date is not in the past.
         2. No other course is scheduled for the same week.
-        
+
         Raises:
-            ValidationError: If the course date is in the past or if another course
+            ValidationError: If the course date
+            is in the past or if another course
             is already scheduled in the same week.
         """
         if self.date < timezone.now().date():
             raise ValidationError("Cannot schedule a course in the past.")
-        
+
         if AFFCourse.objects.filter(
             date__week=self.date.isocalendar()[1]
         ).exclude(id=self.id).exists():
-            raise ValidationError("A course is already scheduled for this week.")
+            raise ValidationError(
+                "A course is already scheduled for this week."
+            )
 
     @property
     def slots_available(self):
         """
-        Returns True if there are available slots for the course, otherwise False.
+        Returns True if there are available slots for the course,
+        otherwise False.
         """
         return self.max_slots > self.booked_slots
 

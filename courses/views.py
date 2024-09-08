@@ -42,10 +42,11 @@ def visitor_details(request, course_id):
     Handles the form submission for visitor details.
 
     - Retrieves the AFFCourse by `course_id`.
-    - On POST: Validates and saves the visitor's details, increments booked slots for the course, 
+    - On POST: Validates and saves the visitor's details,
+      increments booked slots for the course,
       and redirects to the success page.
     - On GET: Displays an empty form for entering visitor details.
-    
+
     Args:
         request: The HTTP request object.
         course_id: The ID of the AFFCourse to book.

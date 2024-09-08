@@ -19,7 +19,8 @@ class JumpSlotAdmin(admin.ModelAdmin):
     """
     Admin interface for managing JumpSlot records.
 
-    - Displays the associated plane, departure time, and available slots in the list view.
+    - Displays the associated plane, departure time,
+      and available slots in the list view.
     - Filters by plane and departure time.
     - Allows searching by the plane's name.
     - Orders jump slots by departure time in descending order.

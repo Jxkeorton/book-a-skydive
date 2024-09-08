@@ -70,7 +70,7 @@ def visitor_details(request):
             visitor_detail.timeslot = timeslot
             visitor_detail.save()
             timeslot.booked_tandems += 1
-            timeslot.save()  # Update the timeslot after booking is confirmed
+            timeslot.save()
             del request.session['selected_timeslot_id']
             messages.success(
                 request,

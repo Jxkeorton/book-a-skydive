@@ -8,19 +8,28 @@ from .forms import BookingForm
 
 
 class PlaneList(LoginRequiredMixin, generic.ListView):
-    """
-    View for listing available jump slots grouped by date.
-    """
     template_name = "experienced/index.html"
     paginate_by = 6
 
     def get_queryset(self):
-        return JumpSlot.objects.all()
+        try:
+            return JumpSlot.objects.all()
+        except JumpSlot.DoesNotExist:
+            messages.error(self.request, "Could not load the jump slots.")
+            return []
+        except Exception as e:
+            messages.error(
+                self.request, "An error occurred while loading the slots."
+            )
+            return []
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user_bookings = JumpBooking.objects.filter(user=self.request.user)
-        booked_slots = user_bookings.values_list('plane_departure__id', flat=True)
+        booked_slots = user_bookings.values_list(
+            'plane_departure__id',
+            flat=True
+        )
 
         # Group slots by date
         slots = self.get_queryset()
@@ -41,8 +50,8 @@ def plane_detail(request, slug):
     """
     View for displaying details of a specific jump slot and managing bookings.
 
-    Shows the details of a jump slot, including users who have booked it. Allows
-    the logged-in user to create or update their booking for the slot.
+    Shows the details of a jump slot, including users who have booked it.
+    Allows the logged-in user to create or update their booking for the slot.
     """
     jump_slot = get_object_or_404(JumpSlot, slug=slug)
     users = jump_slot.users.all()
@@ -113,19 +122,24 @@ def delete_booking(request, booking_id):
     """
     View to delete a booking.
 
-    Allows the user to delete their own booking. Redirects to the plane detail page
+    Allows the user to delete their own booking.
+    Redirects to the plane detail page
     after deletion.
     """
     booking = get_object_or_404(JumpBooking, id=booking_id)
 
-    # Check if the current user is the owner of the booking
     if booking.user == request.user:
-        booking.delete()
-        messages.success(request, 'Booking deleted successfully!')
+        try:
+            booking.delete()
+            messages.success(request, 'Booking deleted successfully!')
+        except Exception as e:
+            messages.error(
+                request,
+                'An error occurred while deleting the booking.'
+            )
     else:
         messages.error(request, 'You can only delete your own bookings!')
 
-    # Redirect back to the plane detail page
     return redirect(
         reverse(
             'plane_detail',

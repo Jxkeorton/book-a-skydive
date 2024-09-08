@@ -31,7 +31,7 @@ class VisitorDetailForm(forms.ModelForm):
     """
     A form for collecting visitor details,
     using the VisitorDetail model.
-    
+
     Fields: email, phone_number, weight, height, and full_name.
     """
     class Meta:
