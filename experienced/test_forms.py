@@ -11,7 +11,7 @@ class TestBookingForm(TestCase):
         self.assertTrue(form.is_valid(), msg="Form is not valid")
         
     def test_form_wrong_jump_type(self):
-        """ Test for all fields"""
+        """ Test for incorrect jump_type"""
         form = BookingForm({
             'jump_type': 'JAZZ'
         })
