@@ -47,7 +47,7 @@ class JumpSlot(models.Model):
         """
         Override the save method to generate a unique slug if it doesn't exist.
         The slug is based on the plane's name and
-        a count of jump slots for that plane.
+        a count of departures of that plane.
         """
         if not self.slug:
             count = JumpSlot.objects.filter(plane=self.plane).count() + 1
