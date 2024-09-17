@@ -13,6 +13,7 @@ class TestExperiencedViews(TestCase):
             password="myPassword",
             email="test@example.com"
         )
+        
          # Create a plane
         self.plane = Plane(
             name="Cessna",
@@ -90,3 +91,21 @@ class TestExperiencedViews(TestCase):
         self.assertEqual(booking.jump_type, 'WINGSUIT')
         
         self.assertIn(b'Booking updated successfully.', response.content)
+        
+    def test_delete_booking(self):
+        """Test that a user can delete their own booking."""
+        self.client.login(username="myUsername", password="myPassword")
+        
+        booking = JumpBooking(
+            user=self.user,
+            plane_departure=self.jump_slot,
+            jump_type="SOLO"
+        )
+        booking.save()
+
+        response = self.client.post(reverse('delete_booking', args=[booking.id]), follow=True)
+
+        # Check the response
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn(booking, JumpBooking.objects.all())
+        self.assertIn(b'Booking deleted successfully!', response.content)
