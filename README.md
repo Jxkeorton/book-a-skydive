@@ -1,6 +1,7 @@
 # Book a skydive
 
-The live link can be found here: [Live Site - Book a skydive]()
+Book a skydive is a fictional Skydiving Dropzone company. The app is a management system for the dropzone allowing them to control the available courses and time slots. It also provides customers with a simple booking system where the experienced jumpers can view and manage bookings. The other customers booking tandems and courses may only create a booking.  
+The live link can be found here: [Live Site - Book a skydive](https://book-a-skydive-3bb0c8212a26.herokuapp.com/)
 
 ## Table of Contents
 - [User-Experience-Design](#user-experience-design)
@@ -35,6 +36,12 @@ The live link can be found here: [Live Site - Book a skydive]()
 
 ## The-Strategy-Plane
 ### Site-Goals
+The site will allow the dropzone to easily manage the available courses, tandems and plane departures (for experienced jumpers) through the admin user interface.
+
+The site will also provide a platform for experienced skydivers where after creating an account they can book a slot on a plane and then view/manage that booking.
+
+A customer looking to book a course or a tandem skydive may only create a booking.
+
 ### Agile Planning
 #### Epics
 #### User Stories
