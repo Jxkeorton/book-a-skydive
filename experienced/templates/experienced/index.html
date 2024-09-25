@@ -19,9 +19,9 @@
                         <strong>Available Slots:</strong> {{ slot.available_slots }}
                     </p>
                     {% if slot.id in booked_slots %}
-                        <a href="{% url 'plane_detail' slot.slug %}" class="btn btn-secondary">Update Booking</a>
+                        <a href="{% url 'experienced:plane_detail' slot.slug %}" class="btn btn-secondary">Update Booking</a>
                     {% else %}
-                        <a href="{% url 'plane_detail' slot.slug %}" class="btn btn-primary">Book Now</a>
+                        <a href="{% url 'experienced:plane_detail' slot.slug %}" class="btn btn-primary">Book Now</a>
                     {% endif %}
                 </div>
             </div>
@@ -36,15 +36,15 @@
           <div class="pagination">
             <span class="step-links">
               {% if page_obj.has_previous %}
-                <a href="{% url 'experienced' %}?page=1">&laquo; first</a>
-                <a href="{% url 'experienced' %}?page={{ page_obj.previous_page_number }}">previous</a>
+                <a href="{% url 'experienced:experienced' %}?page=1">&laquo; first</a>
+                <a href="{% url 'experienced:experienced' %}?page={{ page_obj.previous_page_number }}">previous</a>
               {% endif %}
               <span class="current">
                 Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
               </span>
               {% if page_obj.has_next %}
-                <a href="{% url 'experienced' %}?page={{ page_obj.next_page_number }}">next</a>
-                <a href="{% url 'experienced' %}?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                <a href="{% url 'experienced:experienced' %}?page={{ page_obj.next_page_number }}">next</a>
+                <a href="{% url 'experienced:experienced' %}?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
               {% endif %}
             </span>
           </div>

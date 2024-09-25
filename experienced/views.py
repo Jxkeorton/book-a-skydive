@@ -74,7 +74,7 @@ def plane_detail(request, slug):
             else:
                 messages.success(request, 'Booking completed successfully.')
 
-            return redirect('plane_detail', slug=slug)
+            return redirect('experienced:plane_detail', slug=slug)
     else:
         form = BookingForm(instance=existing_booking)
 
@@ -106,7 +106,7 @@ def edit_booking(request, booking_id):
         if form.is_valid():
             form.save()
             messages.success(request, 'Booking updated successfully.')
-            return redirect('plane_detail', slug=jump_slot.slug)
+            return redirect('experienced:plane_detail', slug=jump_slot.slug)
     else:
         form = BookingForm(instance=booking)
 
@@ -142,6 +142,6 @@ def delete_booking(request, booking_id):
 
     return redirect(
         reverse(
-            'plane_detail',
+            'experienced:plane_detail',
             kwargs={'slug': booking.plane_departure.slug})
         )

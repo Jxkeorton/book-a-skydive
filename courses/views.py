@@ -78,7 +78,7 @@ def visitor_details(request, course_id):
             course.booked_slots += 1
             course.save()
             messages.success(request, f'Booking confirmed for {course.date}')
-            return redirect('course_booking_success')
+            return redirect('courses:course_booking_success')
     else:
         form = VisitorDetailForm()
 
@@ -121,6 +121,6 @@ def delete_booking(request, booking_id):
 
     return redirect(
         reverse(
-            'userprofile'
+            'userprofile:user_profile'
         )
     )

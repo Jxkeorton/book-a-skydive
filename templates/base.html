@@ -42,7 +42,7 @@
                 <a class="nav-link" href="{% url 'home' %}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'list_courses' %}">Courses</a>
+                <a class="nav-link" href="{% url 'courses:list_courses' %}">Courses</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'tandems:select_day' %}">Tandems</a>
@@ -55,7 +55,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="{% url 'experienced' %}">Experienced</a>
+                            <a class="nav-link" aria-current="page" href="{% url 'experienced:experienced' %}">Experienced</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" aria-current="page" href="{% url 'userprofile:user_profile' %}">Profile</a>

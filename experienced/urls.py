@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+app_name = 'experienced'
+
 urlpatterns = [
     path('', views.PlaneList.as_view(), name='experienced'),
     path('<slug:slug>/', views.plane_detail, name='plane_detail'),

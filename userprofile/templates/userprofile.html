@@ -39,7 +39,10 @@
                     {{ course.full_name }} - {{ course.email }} for course on {{ course.course.date }}
                     <div>
                         <a href="#" class="btn btn-warning btn-sm">Edit</a>
-                        <button type="button" data-booking-id="{{ course.id }}" data-booking-type="course" class="btn btn-danger btn-sm btn-delete">Delete</button>
+                        <form action="{% url 'courses:delete_booking' course.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
                     </div>
                 </li>
             {% endfor %}
@@ -57,7 +60,10 @@
                     {{ jump.plane }} - {{ jump.jumpslot.departure|date:"g:i a" }}
                     <div>
                         <a href="#" class="btn btn-warning btn-sm">Edit</a>
-                        <button type="button" data-booking-id="{{ jump.id }}" class="btn btn-danger btn-sm btn-delete">Delete</button>
+                        <form action="{% url 'experienced:delete_booking' jump.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
                     </div>
                 </li>
             {% endfor %}
