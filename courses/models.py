@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 
@@ -63,8 +64,11 @@ class VisitorDetail(models.Model):
         height (PositiveIntegerField): The visitor's height.
         full_name (CharField): The visitor's full name.
     """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='course_bookings', null=True
+    )
     course = models.ForeignKey(
-        AFFCourse, related_name='bookings', on_delete=models.CASCADE
+        'AFFCourse', related_name='bookings', on_delete=models.CASCADE
     )
     email = models.EmailField()
     phone_number = models.CharField(max_length=15)

@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
@@ -88,6 +89,9 @@ class VisitorDetail(models.Model):
     and the time slot they have booked. Includes a method to return a string
     representation of the visitor's details.
     """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='tandem_bookings'
+    )
     email = models.EmailField()
     phone_number = models.CharField(max_length=15)
     weight = models.PositiveIntegerField(validators=[MinValueValidator(0)])
@@ -95,7 +99,7 @@ class VisitorDetail(models.Model):
     full_name = models.CharField(max_length=100)
     timeslot = models.ForeignKey(
         'TandemTimeSlot',
-        related_name='visitor_details',
+        related_name='tandem_timeslot',
         on_delete=models.CASCADE
     )
 
