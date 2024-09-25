@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 <h1 class="mb-4">User Profile</h1>
@@ -38,7 +39,15 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     {{ course.full_name }} - {{ course.email }} for course on {{ course.course.date }}
                     <div>
-                        <a href="#" class="btn btn-warning btn-sm">Edit</a>
+                        <!-- Trigger for the Modal -->
+                        <button type="button" class="btn btn-warning btn-sm edit-booking-btn" 
+                                data-id="{{ course.id }}" 
+                                data-full-name="{{ course.full_name }}" 
+                                data-email="{{ course.email }}" 
+                                data-weight="{{ course.weight }}" 
+                                data-height="{{ course.height }}">
+                            Edit
+                        </button>
                         <form action="{% url 'courses:delete_booking' course.id %}" method="post" style="display:inline;">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -75,23 +84,52 @@
     <h3>You currently have no bookings.</h3>
 {% endif %}
 
-<!-- Delete Confirmation Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<!-- Modal for Editing Booking -->
+<div class="modal fade" id="editBookingModal" tabindex="-1" role="dialog" aria-labelledby="editBookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="editBookingModalLabel">Edit Booking</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body">
-                Are you sure you want to delete this booking?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <a id="deleteConfirm" class="btn btn-danger" href="#">Delete</a>
-            </div>
+            <form id="editBookingForm" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="full_name">Full Name</label>
+                        <input type="text" class="form-control" id="full_name" name="full_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">Weight</label>
+                        <input type="number" class="form-control" id="weight" name="weight">
+                    </div>
+                    <div class="form-group">
+                        <label for="height">Height</label>
+                        <input type="number" class="form-control" id="height" name="height">
+                    </div>
+                    <input type="hidden" id="booking_id" name="booking_id">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
+{% block extras %}
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="{% static 'js/editBookingModal.js' %}"></script>
+<script>
+    const editBookingUrl = "{% url 'courses:edit_booking' course.id %}";
+</script>
+{% endblock %}
 
 {% endblock %}
