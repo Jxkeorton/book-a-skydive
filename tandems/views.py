@@ -1,10 +1,22 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import F
 from .models import TandemDay, TandemTimeSlot
 from .forms import DaySelectForm, TimeSlotSelectForm, VisitorDetailForm
 
+def custom_login_required(view_func):
+    """
+    Custom login_required decorator that adds a message before redirecting.
+    """
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.info(request, "Please create a profile to book a course online.")
+            return redirect('/')
+        return view_func(request, *args, **kwargs)
+    return wrapper
 
+@custom_login_required
 def select_day(request):
     """
     View to select a day for tandem jumps.
@@ -20,7 +32,7 @@ def select_day(request):
             return redirect('select_timeslot', date=selected_day)
     return render(request, 'tandems/select_day.html', {'form': form})
 
-
+@login_required(login_url='/')
 def select_timeslot(request, date):
     """
     View to select a time slot for a specific day.
@@ -47,7 +59,7 @@ def select_timeslot(request, date):
         {'day': day, 'form': form, 'timeslots': timeslots}
     )
 
-
+@login_required(login_url='/')
 def visitor_details(request):
     """
     View to enter visitor details for the selected time slot.

@@ -1,12 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.db.models import F
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from .models import AFFCourse
 from .forms import VisitorDetailForm
 
 
-class CoursesList(generic.ListView):
+class CoursesList(LoginRequiredMixin, generic.ListView):
     """
     Displays a paginated list of AFFCourses with available slots.
 
@@ -18,6 +20,16 @@ class CoursesList(generic.ListView):
     template_name = "courses/list_courses.html"
     context_object_name = 'courses'
     paginate_by = 6
+    login_url = '/'  # Redirect to home if not logged in
+    redirect_field_name = None 
+    
+    def handle_no_permission(self):
+        """
+        Customizes the behavior when the user doesn't have permission
+        (i.e., not logged in). Redirects to home with a message.
+        """
+        messages.info(self.request, "Please create a profile to book a course online.")
+        return redirect(self.login_url)
 
     def get_queryset(self):
         """
@@ -36,7 +48,7 @@ class CoursesList(generic.ListView):
             course.available_slots = course.max_slots - course.booked_slots
         return context
 
-
+@login_required(login_url='/')
 def visitor_details(request, course_id):
     """
     Handles the form submission for visitor details.
