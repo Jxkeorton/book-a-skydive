@@ -1,10 +1,10 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.db.models import F
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from .models import AFFCourse
+from .models import AFFCourse, VisitorDetail
 from .forms import VisitorDetailForm
 
 
@@ -73,6 +73,7 @@ def visitor_details(request, course_id):
         if form.is_valid():
             visitor_detail = form.save(commit=False)
             visitor_detail.course = course
+            visitor_detail.user = request.user 
             visitor_detail.save()
             course.booked_slots += 1
             course.save()
@@ -94,3 +95,32 @@ def booking_success(request):
     This view is rendered after a successful booking.
     """
     return render(request, 'courses/booking_success.html')
+
+@login_required
+def delete_booking(request, booking_id):
+    """
+    View to delete a booking.
+
+    Allows the user to delete their own booking.
+    Redirects to the plane detail page
+    after deletion.
+    """
+    booking = get_object_or_404(VisitorDetail, id=booking_id)
+
+    if booking.user == request.user:
+        try:
+            booking.delete()
+            messages.success(request, 'Booking deleted successfully!')
+        except Exception as e:
+            messages.error(
+                request,
+                'An error occurred while deleting the booking.'
+            )
+    else:
+        messages.error(request, 'You can only delete your own bookings!')
+
+    return redirect(
+        reverse(
+            'userprofile'
+        )
+    )

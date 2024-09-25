@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import F
-from .models import TandemDay, TandemTimeSlot
+from .models import TandemDay, TandemTimeSlot, VisitorDetail
 from .forms import DaySelectForm, TimeSlotSelectForm, VisitorDetailForm
 
 def custom_login_required(view_func):
@@ -29,7 +29,7 @@ def select_day(request):
         form = DaySelectForm(request.POST)
         if form.is_valid():
             selected_day = form.cleaned_data['date']
-            return redirect('select_timeslot', date=selected_day)
+            return redirect('tandems:select_timeslot', date=selected_day)
     return render(request, 'tandems/select_day.html', {'form': form})
 
 @login_required(login_url='/')
@@ -49,7 +49,7 @@ def select_timeslot(request, date):
         if form.is_valid():
             timeslot = form.cleaned_data['timeslot']
             request.session['selected_timeslot_id'] = timeslot.id
-            return redirect('visitor_details')
+            return redirect('tandems:visitor_details')
     else:
         form = TimeSlotSelectForm(day)
 
@@ -71,7 +71,7 @@ def visitor_details(request):
     """
     timeslot_id = request.session.get('selected_timeslot_id')
     if not timeslot_id:
-        return redirect('select_day')
+        return redirect('tandems:select_day')
 
     timeslot = get_object_or_404(TandemTimeSlot, id=timeslot_id)
 
@@ -80,6 +80,7 @@ def visitor_details(request):
         if form.is_valid():
             visitor_detail = form.save(commit=False)
             visitor_detail.timeslot = timeslot
+            visitor_detail.user = request.user 
             visitor_detail.save()
             timeslot.booked_tandems += 1
             timeslot.save()
@@ -88,7 +89,7 @@ def visitor_details(request):
                 request,
                 f'Booking confirmed for {timeslot.time} on {timeslot.day.date}'
             )
-            return redirect('booking_success')
+            return redirect('tandems:booking_success')
     else:
         form = VisitorDetailForm()
 
@@ -106,3 +107,28 @@ def booking_success(request):
     Renders a template that informs the user of successful booking.
     """
     return render(request, 'tandems/booking_success.html')
+
+@login_required
+def delete_booking(request, booking_id):
+    """
+    View to delete a booking.
+
+    Allows the user to delete their own booking.
+    Redirects to the plane detail page
+    after deletion.
+    """
+    booking = get_object_or_404(VisitorDetail, id=booking_id)
+
+    if booking.user == request.user:
+        try:
+            booking.delete()
+            messages.success(request, 'Booking deleted successfully!')
+        except Exception as e:
+            messages.error(
+                request,
+                'An error occurred while deleting the booking.'
+            )
+    else:
+        messages.error(request, 'You can only delete your own bookings!')
+
+    return redirect(reverse('userprofile:user_profile')) 

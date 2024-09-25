@@ -1,12 +1,22 @@
 const deleteModal = new bootstrap.Modal(document.getElementById("deleteModal"));
-const deleteButtons = document.getElementsByClassName("btn-delete");
+const deleteButtons = document.querySelectorAll(".btn-delete"); // Select all delete buttons
 const deleteConfirm = document.getElementById("deleteConfirm");
 
-for (let button of deleteButtons) {
+// Add event listener to each delete button
+deleteButtons.forEach(button => {
     button.addEventListener("click", (e) => {
         let bookingId = e.target.getAttribute("data-booking-id");
-        // Set the delete confirmation link to the correct URL
-        deleteConfirm.href = `/sport/delete_booking/${bookingId}/`;
+        let bookingType = e.target.getAttribute("data-booking-type"); 
+
+        if (bookingType === 'tandem') {
+            deleteConfirm.href = `/tandems/delete_tandem_booking/${bookingId}/`; // Tandem delete URL
+        } else if (bookingType === 'course') {
+            deleteConfirm.href = `/course/delete_booking/${bookingId}/`; // Course delete URL
+        } else {
+            deleteConfirm.href = `/sport/delete_booking/${bookingId}/`; // Default for experienced bookings
+        }
+
+        // Show the modal
         deleteModal.show();
     });
-}
+});
