@@ -112,7 +112,7 @@ def edit_booking(request, booking_id):
 
     return render(
         request,
-        'experienced/edit_booking.html',
+        'experienced/plane-detail.html',
         {'form': form, 'jump_slot': jump_slot}
     )
 
