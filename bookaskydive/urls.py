@@ -10,5 +10,5 @@ urlpatterns = [
     path('course/', include('courses.urls'), name='courses_urls'),
     path('sport/', include('experienced.urls'), name="experienced_urls"),
     path('tandems/', include('tandems.urls'), name='tandems_urls'),
-    path('profile/', include('userprofile.urls'), name='userprofile_urls'),
+    path('profile/', include('userprofile.urls'), name='userprofile'),
 ]
