@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'tandems',
     'courses',
     'experienced',
+    'userprofile',
 ]
 
 SITE_ID = 1
