@@ -6,37 +6,28 @@ $(document).ready(function(){
         const email = $(this).data('email');
         const weight = $(this).data('weight');
         const height = $(this).data('height');
+        const phoneNumber = $(this).data('phone-number');
+
+        console.log(phoneNumber)
 
         // Set values in the modal
         $('#full_name').val(fullName);
         $('#email').val(email);
         $('#weight').val(weight);
         $('#height').val(height);
+        $('#phone_number').val(phoneNumber);
         $('#booking_id').val(bookingId);
+
+        // Dynamically set the form action URL
+        $('#editBookingForm').attr('action', `/course/edit/${bookingId}/`);
 
         // Show the modal
         $('#editBookingModal').modal('show');
     });
 
-    // Handle form submission
-    $('#editBookingForm').on('submit', function(e){
-        e.preventDefault(); // Prevent default form submission
-
-        const url = editBookingUrl // Replace the placeholder
-
-        // Send an AJAX POST request to update the booking
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: $(this).serialize(),
-            success: function(response) {
-                // Close the modal and refresh the page or update the list
-                $('#editBookingModal').modal('hide');
-                location.reload(); // Refresh to see the changes (or update the list dynamically)
-            },
-            error: function(error) {
-                alert("An error occurred while updating the booking.");
-            }
-        });
+     // Handle modal close on button or "x" click
+     $('#editBookingModal .close, .btn-secondary').click(function() {
+        $('#editBookingModal').modal('hide');  // Programmatically hide modal
     });
+
 });

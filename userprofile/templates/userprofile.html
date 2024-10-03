@@ -45,7 +45,8 @@
                                 data-full-name="{{ course.full_name }}" 
                                 data-email="{{ course.email }}" 
                                 data-weight="{{ course.weight }}" 
-                                data-height="{{ course.height }}">
+                                data-height="{{ course.height }}"
+                                data-phone-number="{{ course.phone_number }}">
                             Edit
                         </button>
                         <form action="{% url 'courses:delete_booking' course.id %}" method="post" style="display:inline;">
@@ -54,6 +55,9 @@
                         </form>
                     </div>
                 </li>
+                <script>
+                    const editBookingUrl = "{% url 'courses:edit_booking' course.id %}";
+                </script>
             {% endfor %}
         {% else %}
             <li class="list-group-item">No AFF course bookings found.</li>
@@ -106,6 +110,10 @@
                         <input type="email" class="form-control" id="email" name="email">
                     </div>
                     <div class="form-group">
+                        <label for="phone_number">Phone Number</label>
+                        <input type="tel" class="form-control" id="phone_number" name="phone_number">
+                    </div>
+                    <div class="form-group">
                         <label for="weight">Weight</label>
                         <input type="number" class="form-control" id="weight" name="weight">
                     </div>
@@ -127,9 +135,7 @@
 {% block extras %}
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script src="{% static 'js/editBookingModal.js' %}"></script>
-<script>
-    const editBookingUrl = "{% url 'courses:edit_booking' course.id %}";
-</script>
+
 {% endblock %}
 
 {% endblock %}

@@ -142,17 +142,23 @@ def edit_booking(request, booking_id):
         A rendered template with the form for editing the booking.
     """
     booking = get_object_or_404(VisitorDetail, id=booking_id)
+    
+    print("triggered edit course booking")
 
     if booking.user != request.user:
         messages.error(request, "You can only edit your own bookings!")
         return redirect('userprofile:user_profile')
 
     if request.method == 'POST':
-        form = VisitorDetailForm(request.POST, instance=booking)
+        form = VisitorDetailForm(data=request.POST, instance=booking)
+        print(request.POST)
+        
         if form.is_valid():
             form.save()
             messages.success(request, 'Your booking has been updated successfully!')
             return redirect('userprofile:user_profile')
+        else:
+            print(form.errors)
     else:
         form = VisitorDetailForm(instance=booking)
 
