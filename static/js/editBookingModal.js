@@ -8,6 +8,8 @@ $(document).ready(function(){
         const height = $(this).data('height');
         const phoneNumber = $(this).data('phone-number');
 
+        const type = $(this).data('type');
+
         console.log(phoneNumber)
 
         // Set values in the modal
@@ -18,8 +20,19 @@ $(document).ready(function(){
         $('#phone_number').val(phoneNumber);
         $('#booking_id').val(bookingId);
 
+        let url = ''
+
+        if(type === 'course') {
+            url = `/course/edit/${bookingId}/`
+        } else {
+            url = `/tandems/edit/${bookingId}/`
+        }
+
         // Dynamically set the form action URL
-        $('#editBookingForm').attr('action', `/course/edit/${bookingId}/`);
+        $('#editBookingForm').attr(
+            'action',
+            url
+        );
 
         // Show the modal
         $('#editBookingModal').modal('show');

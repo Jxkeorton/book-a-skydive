@@ -132,3 +132,42 @@ def delete_booking(request, booking_id):
         messages.error(request, 'You can only delete your own bookings!')
 
     return redirect(reverse('userprofile:user_profile')) 
+
+@login_required(login_url='/')
+def edit_booking(request, booking_id):
+    """
+    View to edit an existing booking.
+
+    Retrieves the VisitorDetail by `booking_id`, displays
+    a form pre-filled with the current details, and updates
+    the booking upon valid submission.
+
+    Args:
+        request: The HTTP request object.
+        booking_id: The ID of the VisitorDetail to edit.
+
+    Returns:
+        A rendered template with the form for editing the booking.
+    """
+    booking = get_object_or_404(VisitorDetail, id=booking_id)
+    
+    print("triggered edit course booking")
+
+    if booking.user != request.user:
+        messages.error(request, "You can only edit your own bookings!")
+        return redirect('userprofile:user_profile')
+
+    if request.method == 'POST':
+        form = VisitorDetailForm(data=request.POST, instance=booking)
+        print(request.POST)
+        
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your booking has been updated successfully!')
+            return redirect('userprofile:user_profile')
+        else:
+            print(form.errors)
+    else:
+        form = VisitorDetailForm(instance=booking)
+
+    return render(request, 'index.html', {'form': form, 'booking': booking})

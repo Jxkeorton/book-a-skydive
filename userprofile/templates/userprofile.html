@@ -18,7 +18,17 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     {{ booking.full_name }} - {{ booking.email }} on {{ booking.timeslot.day.date }}
                     <div>
-                        <a href="#" class="btn btn-warning btn-sm">Edit</a>
+                        <!-- Trigger for the Modal -->
+                        <button type="button" class="btn btn-warning btn-sm edit-booking-btn" 
+                                data-id="{{ booking.id }}" 
+                                data-full-name="{{ booking.full_name }}" 
+                                data-email="{{ booking.email }}" 
+                                data-weight="{{ booking.weight }}" 
+                                data-height="{{ booking.height }}"
+                                data-phone-number="{{ booking.phone_number }}"
+                                data-type="tandem">
+                            Edit
+                        </button>
                         <form action="{% url 'tandems:delete_booking' booking.id %}" method="post" style="display:inline;">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -46,7 +56,8 @@
                                 data-email="{{ course.email }}" 
                                 data-weight="{{ course.weight }}" 
                                 data-height="{{ course.height }}"
-                                data-phone-number="{{ course.phone_number }}">
+                                data-phone-number="{{ course.phone_number }}"
+                                data-type="course">
                             Edit
                         </button>
                         <form action="{% url 'courses:delete_booking' course.id %}" method="post" style="display:inline;">
