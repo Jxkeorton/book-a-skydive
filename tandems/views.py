@@ -90,6 +90,8 @@ def visitor_details(request):
                 f'Booking confirmed for {timeslot.time} on {timeslot.day.date}'
             )
             return redirect('tandems:booking_success')
+        else: 
+            messages.error(request, 'Please correct the errors below.')
     else:
         form = VisitorDetailForm()
 

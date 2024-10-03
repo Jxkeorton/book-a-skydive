@@ -78,3 +78,14 @@ class VisitorDetail(models.Model):
 
     def __str__(self):
         return f'{self.full_name} - {self.course.date}'
+    
+    def delete(self, *args, **kwargs):
+        """
+        Override the delete method to adjust booked_slots
+        before deleting the booking.
+        """
+        # Decrement the booked_slots of the associated course
+        if self.course.booked_slots > 0:
+            self.course.booked_slots -= 1
+            self.course.save()
+        super().delete(*args, **kwargs)

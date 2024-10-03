@@ -79,6 +79,8 @@ def visitor_details(request, course_id):
             course.save()
             messages.success(request, f'Booking confirmed for {course.date}')
             return redirect('courses:course_booking_success')
+        else: 
+            messages.error(request, 'Please correct the errors below.')
     else:
         form = VisitorDetailForm()
 

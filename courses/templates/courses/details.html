@@ -15,6 +15,9 @@
               <label for="{{ form.full_name.id_for_label }}" class="col-sm-4 col-form-label">{{ form.full_name.label }}</label>
               <div class="col-sm-8">
                 {{ form.full_name }}
+                {% if form.full_name.errors %}
+                  <div class="text-danger">{{ form.full_name.errors|join:", " }}</div>
+                {% endif %}
               </div>
             </div>
 
@@ -23,6 +26,9 @@
               <label for="{{ form.email.id_for_label }}" class="col-sm-4 col-form-label">{{ form.email.label }}</label>
               <div class="col-sm-8">
                 {{ form.email }}
+                {% if form.email.errors %}
+                  <div class="text-danger">{{ form.email.errors|join:", " }}</div>
+                {% endif %}
               </div>
             </div>
 
@@ -31,6 +37,9 @@
               <label for="{{ form.phone_number.id_for_label }}" class="col-sm-4 col-form-label">{{ form.phone_number.label }}</label>
               <div class="col-sm-8">
                 {{ form.phone_number }}
+                {% if form.phone_number.errors %}
+                  <div class="text-danger">{{ form.phone_number.errors|join:", " }}</div>
+                {% endif %}
               </div>
             </div>
 
@@ -39,6 +48,9 @@
               <label for="{{ form.weight.id_for_label }}" class="col-sm-4 col-form-label">{{ form.weight.label }}</label>
               <div class="col-sm-8">
                 {{ form.weight }}
+                {% if form.weight.errors %}
+                  <div class="text-danger">{{ form.weight.errors|join:", " }}</div>
+                {% endif %}
               </div>
             </div>
 
@@ -47,6 +59,9 @@
               <label for="{{ form.height.id_for_label }}" class="col-sm-4 col-form-label">{{ form.height.label }}</label>
               <div class="col-sm-8">
                 {{ form.height }}
+                {% if form.height.errors %}
+                  <div class="text-danger">{{ form.height.errors|join:", " }}</div>
+                {% endif %}
               </div>
             </div>
 

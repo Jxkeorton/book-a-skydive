@@ -108,3 +108,14 @@ class VisitorDetail(models.Model):
         Returns a string representation of the visitor's full name and email.
         """
         return f'{self.full_name} - {self.email}'
+    
+    def delete(self, *args, **kwargs):
+        """
+        Override the delete method to adjust booked_tandems
+        before deleting the booking.
+        """
+        # Decrement the booked_tandems of the associated time slot
+        if self.timeslot.booked_tandems > 0:
+            self.timeslot.booked_tandems -= 1
+            self.timeslot.save()
+        super().delete(*args, **kwargs)
