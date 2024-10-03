@@ -2,110 +2,114 @@
 {% load static %}
 
 {% block content %}
-<h1 class="mb-4">User Profile</h1>
-<p>Welcome to your profile, <strong>{{ user.username }}</strong>!</p>
-<p>Your email: <strong>{{ user.email }}</strong></p>
+<div class="container py-4">
+    <h1 class="mb-4">User Profile</h1>
+    <p>Welcome to your profile, <strong>{{ user.username }}</strong>!</p>
+    <p>Your email: <strong>{{ user.email }}</strong></p>
 
-<h2 class="mt-4">Current Bookings</h2>
-<p>Here you will be able to track all of your current bookings.</p>
+    <!-- Current Bookings Section -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h2 class="card-title">Current Bookings</h2>
+            <p>Here you will be able to track all of your current bookings.</p>
 
-{% if has_bookings %}
-    <!-- Tandem Bookings Section -->
-    <h2>Tandem Bookings</h2>
-    <ul class="list-group mb-4">
-        {% if tandem_bookings %}
-            {% for booking in tandem_bookings %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ booking.full_name }} - {{ booking.email }} on {{ booking.timeslot.day.date }}
-                    <div>
-                        <!-- Trigger for the Modal -->
-                        <button type="button" class="btn btn-warning btn-sm edit-booking-btn" 
-                                data-id="{{ booking.id }}" 
-                                data-full-name="{{ booking.full_name }}" 
-                                data-email="{{ booking.email }}" 
-                                data-weight="{{ booking.weight }}" 
-                                data-height="{{ booking.height }}"
-                                data-phone-number="{{ booking.phone_number }}"
-                                data-type="tandem">
-                            Edit
-                        </button>
-                        <form action="{% url 'tandems:delete_booking' booking.id %}" method="post" style="display:inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    </div>
-                </li>
-            {% endfor %}
-        {% else %}
-            <li class="list-group-item">No tandem bookings found.</li>
-        {% endif %}
-    </ul>
+            {% if has_bookings %}
+                <!-- Tandem Bookings Section -->
+                <h3 class="mt-4">Tandem Bookings</h3>
+                <ul class="list-group mb-4">
+                    {% if tandem_bookings %}
+                        {% for booking in tandem_bookings %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ booking.full_name }} - {{ booking.email }} on {{ booking.timeslot.day.date }}
+                                <div>
+                                    <!-- Trigger for the Modal -->
+                                    <button type="button" class="btn btn-warning btn-sm edit-booking-btn"
+                                            data-id="{{ booking.id }}" 
+                                            data-full-name="{{ booking.full_name }}" 
+                                            data-email="{{ booking.email }}" 
+                                            data-weight="{{ booking.weight }}" 
+                                            data-height="{{ booking.height }}"
+                                            data-phone-number="{{ booking.phone_number }}"
+                                            data-type="tandem">
+                                        Edit
+                                    </button>
+                                    <form action="{% url 'tandems:delete_booking' booking.id %}" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item">No tandem bookings found.</li>
+                    {% endif %}
+                </ul>
 
-    <!-- AFF Course Bookings Section -->
-    <h2>AFF Course Bookings</h2>
-    <ul class="list-group mb-4">
-        {% if course_bookings %}
-            {% for course in course_bookings %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ course.full_name }} - {{ course.email }} for course on {{ course.course.date }}
-                    <div>
-                        <!-- Trigger for the Modal -->
-                        <button type="button" class="btn btn-warning btn-sm edit-booking-btn" 
-                                data-id="{{ course.id }}" 
-                                data-full-name="{{ course.full_name }}" 
-                                data-email="{{ course.email }}" 
-                                data-weight="{{ course.weight }}" 
-                                data-height="{{ course.height }}"
-                                data-phone-number="{{ course.phone_number }}"
-                                data-type="course">
-                            Edit
-                        </button>
-                        <form action="{% url 'courses:delete_booking' course.id %}" method="post" style="display:inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    </div>
-                </li>
-                <script>
-                    const editBookingUrl = "{% url 'courses:edit_booking' course.id %}";
-                </script>
-            {% endfor %}
-        {% else %}
-            <li class="list-group-item">No AFF course bookings found.</li>
-        {% endif %}
-    </ul>
+                <!-- AFF Course Bookings Section -->
+                <h3>AFF Course Bookings</h3>
+                <ul class="list-group mb-4">
+                    {% if course_bookings %}
+                        {% for course in course_bookings %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ course.full_name }} - {{ course.email }} for course on {{ course.course.date }}
+                                <div>
+                                    <!-- Trigger for the Modal -->
+                                    <button type="button" class="btn btn-warning btn-sm edit-booking-btn"
+                                            data-id="{{ course.id }}" 
+                                            data-full-name="{{ course.full_name }}" 
+                                            data-email="{{ course.email }}" 
+                                            data-weight="{{ course.weight }}" 
+                                            data-height="{{ course.height }}"
+                                            data-phone-number="{{ course.phone_number }}"
+                                            data-type="course">
+                                        Edit
+                                    </button>
+                                    <form action="{% url 'courses:delete_booking' course.id %}" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item">No AFF course bookings found.</li>
+                    {% endif %}
+                </ul>
 
-    <!-- Experienced Jump Bookings Section -->
-    <h2>Experienced Bookings</h2>
-    <ul class="list-group mb-4">
-        {% if experienced_bookings %}
-            {% for jump in experienced_bookings %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ jump.plane_departure.plane.name }} - {{ jump.plane_departure.departure|date:"g:i a" }}
-                    <div>
-                        <a href="{% url 'experienced:edit_booking' jump.id %}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{% url 'experienced:delete_booking' jump.id %}" method="post" style="display:inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    </div>
-                </li>
-            {% endfor %}
-        {% else %}
-            <li class="list-group-item">No experienced jump bookings found.</li>
-        {% endif %}
-    </ul>
-{% else %}
-    <h3>You currently have no bookings.</h3>
-{% endif %}
+                <!-- Experienced Jump Bookings Section -->
+                <h3>Experienced Bookings</h3>
+                <ul class="list-group mb-4">
+                    {% if experienced_bookings %}
+                        {% for jump in experienced_bookings %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ jump.plane_departure.plane.name }} - {{ jump.plane_departure.departure|date:"g:i a" }}
+                                <div>
+                                    <a href="{% url 'experienced:edit_booking' jump.id %}" class="btn btn-warning btn-sm">Edit</a>
+                                    <form action="{% url 'experienced:delete_booking' jump.id %}" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item">No experienced jump bookings found.</li>
+                    {% endif %}
+                </ul>
+            {% else %}
+                <h3 class="text-center text-muted">You currently have no bookings.</h3>
+            {% endif %}
+        </div>
+    </div>
+</div>
 
 <!-- Modal for Editing Booking -->
 <div class="modal fade" id="editBookingModal" tabindex="-1" role="dialog" aria-labelledby="editBookingModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="editBookingModalLabel">Edit Booking</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -114,11 +118,11 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="full_name">Full Name</label>
-                        <input type="text" class="form-control" id="full_name" name="full_name">
+                        <input type="text" class="form-control" id="full_name" name="full_name" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email">
+                        <input type="email" class="form-control" id="email" name="email" required>
                     </div>
                     <div class="form-group">
                         <label for="phone_number">Phone Number</label>
@@ -148,5 +152,4 @@
 <script src="{% static 'js/editBookingModal.js' %}"></script>
 
 {% endblock %}
-
 {% endblock %}
