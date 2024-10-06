@@ -37,9 +37,10 @@ class TestExperiencedViews(TestCase):
         renders correctly with the booking form.
         """
         self.client.login(
-            username="myUsername", password="myPassword")
+            username="myUsername", password="myPassword"
+        )
         response = self.client.get(
-            reverse('plane_detail', args=[self.jump_slot.slug])
+            reverse('experienced:plane_detail', args=[self.jump_slot.slug])
         )
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"Cessna", response.content)
@@ -56,7 +57,7 @@ class TestExperiencedViews(TestCase):
 
         # Pass follow=True to follow the redirect after POST request
         response = self.client.post(reverse(
-            'plane_detail',
+            'experienced:plane_detail',
             args=[self.jump_slot.slug]),
             booking_data,
             follow=True
@@ -88,7 +89,7 @@ class TestExperiencedViews(TestCase):
         }
 
         response = self.client.post(
-            reverse('edit_booking', args=[booking.id]),
+            reverse('experienced:edit_booking', args=[booking.id]),
             updated_booking_data,
             follow=True
         )
@@ -112,8 +113,11 @@ class TestExperiencedViews(TestCase):
         booking.save()
 
         response = self.client.post(
-            reverse('delete_booking', args=[booking.id]), follow=True
-        )
+                        reverse(
+                            'experienced:delete_booking',
+                            args=[booking.id]),
+                            follow=True
+                        )
 
         # Check the response
         self.assertEqual(response.status_code, 200)

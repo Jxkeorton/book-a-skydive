@@ -411,7 +411,13 @@ The rest of the images of skydivers were taken by me in my training to become a 
 
 ### Functional testing
 ### Unit testing
+These tests check the validity of forms by ensuring that it behaves correctly with both valid and invalid input. One test verifies that the form is valid when provided with correct data, while the other confirms that the form rejects incorrect data.
 
+They also validate different aspects of a few views. One test checks that the plane detail page renders properly with the booking form, while another ensures that a booking can be successfully submitted. There are also tests within the experienced app for editing an existing booking to verify the update functionality, and for deleting a booking to confirm that a user can remove their own booking.
+
+I did also come across the issue that after having making my tests I then had to change my code due to new functionality (users had to be logged in to book a course), I learnt that maintaining tests is another important part of development. After these fixes the Unit tests now pass.
+
+![Unit Tests](docs/test-images/unit-tests.png)
 
 ### Accessibility
 [Wave Accessibility](https://wave.webaim.org/) tool was used throughout development and for final testing of the deployed website to check for any aid accessibility testing.
