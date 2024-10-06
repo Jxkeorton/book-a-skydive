@@ -6,7 +6,7 @@ html, body {
 }
 
 .navbar {
-    height: 170px; /* Adjust the height to your desired value */
+    height: 170px;
 }
 
 .navbar-brand img {
@@ -139,5 +139,29 @@ footer {
 }
 
 
+@media (max-width: 991.98px) {
+    .navbar {
+        height: auto;
+    }
 
+    .navbar-nav {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .nav-link {
+        line-height: normal;
+        padding: 0.5rem 1rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .navbar-brand img {
+        height: 120px; 
+    }
+
+    .nav-link {
+        font-size: medium;
+    }
+}
 
