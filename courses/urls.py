@@ -5,8 +5,16 @@ app_name = 'courses'
 
 urlpatterns = [
     path('', views.CoursesList.as_view(), name='list_courses'),
-    path('visitor_details/<int:course_id>/', views.visitor_details, name='course_visitor_details'),
-    path('booking_success/', views.booking_success, name='course_booking_success'),
+    path(
+        'visitor_details/<int:course_id>/',
+        views.visitor_details,
+        name='course_visitor_details'
+    ),
+    path(
+        'booking_success/',
+        views.booking_success,
+        name='course_booking_success'
+    ),
     path(
         'delete_booking/<int:booking_id>/',
         views.delete_booking,

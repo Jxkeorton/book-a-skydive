@@ -21,14 +21,17 @@ class CoursesList(LoginRequiredMixin, generic.ListView):
     context_object_name = 'courses'
     paginate_by = 6
     login_url = '/'  # Redirect to home if not logged in
-    redirect_field_name = None 
-    
+    redirect_field_name = None
+
     def handle_no_permission(self):
         """
         Customizes the behavior when the user doesn't have permission
         (i.e., not logged in). Redirects to home with a message.
         """
-        messages.info(self.request, "Please create a profile to book a course online.")
+        messages.info(
+            self.request,
+            "Please create a profile to book a course online."
+        )
         return redirect(self.login_url)
 
     def get_queryset(self):
@@ -47,6 +50,7 @@ class CoursesList(LoginRequiredMixin, generic.ListView):
         for course in context['object_list']:
             course.available_slots = course.max_slots - course.booked_slots
         return context
+
 
 @login_required(login_url='/')
 def visitor_details(request, course_id):
@@ -73,13 +77,13 @@ def visitor_details(request, course_id):
         if form.is_valid():
             visitor_detail = form.save(commit=False)
             visitor_detail.course = course
-            visitor_detail.user = request.user 
+            visitor_detail.user = request.user
             visitor_detail.save()
             course.booked_slots += 1
             course.save()
             messages.success(request, f'Booking confirmed for {course.date}')
             return redirect('courses:course_booking_success')
-        else: 
+        else:
             messages.error(request, 'Please correct the errors below.')
     else:
         form = VisitorDetailForm()
@@ -97,6 +101,7 @@ def booking_success(request):
     This view is rendered after a successful booking.
     """
     return render(request, 'courses/booking_success.html')
+
 
 @login_required
 def delete_booking(request, booking_id):
@@ -126,7 +131,8 @@ def delete_booking(request, booking_id):
             'userprofile:user_profile'
         )
     )
-    
+
+
 @login_required(login_url='/')
 def edit_booking(request, booking_id):
     """
@@ -144,7 +150,7 @@ def edit_booking(request, booking_id):
         A rendered template with the form for editing the booking.
     """
     booking = get_object_or_404(VisitorDetail, id=booking_id)
-    
+
     print("triggered edit course booking")
 
     if booking.user != request.user:
@@ -154,10 +160,13 @@ def edit_booking(request, booking_id):
     if request.method == 'POST':
         form = VisitorDetailForm(data=request.POST, instance=booking)
         print(request.POST)
-        
+
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your booking has been updated successfully!')
+            messages.success(
+                request,
+                'Your booking has been updated successfully!'
+            )
             return redirect('userprofile:user_profile')
         else:
             print(form.errors)

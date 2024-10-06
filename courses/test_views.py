@@ -4,6 +4,7 @@ from django.utils import timezone
 from .models import AFFCourse, VisitorDetail
 from .forms import VisitorDetailForm
 
+
 class TestVisitorDetailsView(TestCase):
 
     def setUp(self):
@@ -16,7 +17,9 @@ class TestVisitorDetailsView(TestCase):
 
     def test_view_visitor_details_form(self):
         """Test that the visitor details form is rendered correctly."""
-        response = self.client.get(reverse('course_visitor_details', args=[self.course.id]))
+        response = self.client.get(
+            reverse('course_visitor_details', args=[self.course.id])
+        )
 
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(
@@ -32,10 +35,17 @@ class TestVisitorDetailsView(TestCase):
             'full_name': 'John Doe'
         }
 
-        response = self.client.post(reverse('course_visitor_details', args=[self.course.id]), booking_data, follow=True)
+        response = self.client.post(
+            reverse('course_visitor_details',
+                    args=[self.course.id]),
+            booking_data, follow=True
+                )
 
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Booking confirmed for', response.content)
-        self.assertEqual(AFFCourse.objects.get(id=self.course.id).booked_slots, 6)
-        self.assertTrue(VisitorDetail.objects.filter(email='visitor@example.com').exists())
-
+        self.assertEqual(
+            AFFCourse.objects.get(id=self.course.id).booked_slots, 6
+        )
+        self.assertTrue(
+            VisitorDetail.objects.filter(email='visitor@example.com').exists()
+        )

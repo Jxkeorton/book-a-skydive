@@ -18,4 +18,3 @@ def contact_views(request):
     This view handles the rendering of the 'contact.html' template
     """
     return render(request, 'contact.html')
-    

@@ -421,6 +421,8 @@ Due to the django templating language code used in the HTML files, these could n
 **Pep8**
 All pages were run through the official Pep8 validator to ensure all code was pep8 compliant. Some errors were shown due to blank spacing and lines too long, 1 line instead of 2 expected. All of these errors were resolved and code passed through validators with the exception of the settings.py file.
 
+
+
 **JSHINT**
 JavaScript code was run through JSHINT javascript validator. 
 

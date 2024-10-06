@@ -65,7 +65,9 @@ class VisitorDetail(models.Model):
         full_name (CharField): The visitor's full name.
     """
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='course_bookings', null=True
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='course_bookings', null=True
     )
     course = models.ForeignKey(
         'AFFCourse', related_name='bookings', on_delete=models.CASCADE
@@ -78,7 +80,7 @@ class VisitorDetail(models.Model):
 
     def __str__(self):
         return f'{self.full_name} - {self.course.date}'
-    
+
     def delete(self, *args, **kwargs):
         """
         Override the delete method to adjust booked_slots

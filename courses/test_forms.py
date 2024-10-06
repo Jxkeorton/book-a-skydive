@@ -1,6 +1,7 @@
 from django.test import TestCase
 from .forms import VisitorDetailForm
 
+
 class TestVisitorDetailForm(TestCase):
 
     def test_form_is_valid(self):
@@ -18,7 +19,7 @@ class TestVisitorDetailForm(TestCase):
     def test_form_is_invalid(self):
         """Test that the form is invalid with incorrect data."""
         form_data = {
-            'email': '',  
+            'email': '',
             'phone_number': '1234567890',
             'weight': 70,
             'height': 175,
@@ -26,4 +27,3 @@ class TestVisitorDetailForm(TestCase):
         }
         form = VisitorDetailForm(data=form_data)
         self.assertFalse(form.is_valid(), msg="No Email but form is valid")
-        

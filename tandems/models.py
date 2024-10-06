@@ -90,7 +90,9 @@ class VisitorDetail(models.Model):
     representation of the visitor's details.
     """
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='tandem_bookings'
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='tandem_bookings'
     )
     email = models.EmailField()
     phone_number = models.CharField(max_length=15)
@@ -108,7 +110,7 @@ class VisitorDetail(models.Model):
         Returns a string representation of the visitor's full name and email.
         """
         return f'{self.full_name} - {self.email}'
-    
+
     def delete(self, *args, **kwargs):
         """
         Override the delete method to adjust booked_tandems

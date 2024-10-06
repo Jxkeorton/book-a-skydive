@@ -45,9 +45,9 @@ class VisitorDetailForm(forms.ModelForm):
             'height': forms.NumberInput(attrs={'class': 'form-control'}),
             'full_name': forms.TextInput(attrs={'class': 'form-control'}),
         }
-        
+
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get('phone_number')
-        if not re.match(r'^\d+$', phone_number): 
+        if not re.match(r'^\d+$', phone_number):
             raise forms.ValidationError("Phone number must be numeric.")
         return phone_number

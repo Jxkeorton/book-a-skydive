@@ -5,16 +5,20 @@ from django.db.models import F
 from .models import TandemDay, TandemTimeSlot, VisitorDetail
 from .forms import DaySelectForm, TimeSlotSelectForm, VisitorDetailForm
 
+
 def custom_login_required(view_func):
     """
     Custom login_required decorator that adds a message before redirecting.
     """
     def wrapper(request, *args, **kwargs):
         if not request.user.is_authenticated:
-            messages.info(request, "Please create a profile to book a course online.")
+            messages.info(
+                request, "Please create a profile to book a course online."
+            )
             return redirect('/')
         return view_func(request, *args, **kwargs)
     return wrapper
+
 
 @custom_login_required
 def select_day(request):
@@ -31,6 +35,7 @@ def select_day(request):
             selected_day = form.cleaned_data['date']
             return redirect('tandems:select_timeslot', date=selected_day)
     return render(request, 'tandems/select_day.html', {'form': form})
+
 
 @login_required(login_url='/')
 def select_timeslot(request, date):
@@ -59,6 +64,7 @@ def select_timeslot(request, date):
         {'day': day, 'form': form, 'timeslots': timeslots}
     )
 
+
 @login_required(login_url='/')
 def visitor_details(request):
     """
@@ -80,7 +86,7 @@ def visitor_details(request):
         if form.is_valid():
             visitor_detail = form.save(commit=False)
             visitor_detail.timeslot = timeslot
-            visitor_detail.user = request.user 
+            visitor_detail.user = request.user
             visitor_detail.save()
             timeslot.booked_tandems += 1
             timeslot.save()
@@ -90,7 +96,7 @@ def visitor_details(request):
                 f'Booking confirmed for {timeslot.time} on {timeslot.day.date}'
             )
             return redirect('tandems:booking_success')
-        else: 
+        else:
             messages.error(request, 'Please correct the errors below.')
     else:
         form = VisitorDetailForm()
@@ -109,6 +115,7 @@ def booking_success(request):
     Renders a template that informs the user of successful booking.
     """
     return render(request, 'tandems/booking_success.html')
+
 
 @login_required
 def delete_booking(request, booking_id):
@@ -133,7 +140,8 @@ def delete_booking(request, booking_id):
     else:
         messages.error(request, 'You can only delete your own bookings!')
 
-    return redirect(reverse('userprofile:user_profile')) 
+    return redirect(reverse('userprofile:user_profile'))
+
 
 @login_required(login_url='/')
 def edit_booking(request, booking_id):
@@ -152,7 +160,7 @@ def edit_booking(request, booking_id):
         A rendered template with the form for editing the booking.
     """
     booking = get_object_or_404(VisitorDetail, id=booking_id)
-    
+
     print("triggered edit course booking")
 
     if booking.user != request.user:
@@ -162,10 +170,12 @@ def edit_booking(request, booking_id):
     if request.method == 'POST':
         form = VisitorDetailForm(data=request.POST, instance=booking)
         print(request.POST)
-        
+
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your booking has been updated successfully!')
+            messages.success(
+                request, 'Your booking has been updated successfully!'
+            )
             return redirect('userprofile:user_profile')
         else:
             print(form.errors)
