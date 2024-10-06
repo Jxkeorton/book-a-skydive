@@ -75,6 +75,7 @@ Epics are large bodies of work that can be broken down into smaller tasks or use
 User stories are smaller, manageable tasks derived from the epics. They define specific requirements from the perspective of the end user. Below are examples of user stories for each epic:
 
 **Epic 1: Logged in user can book, update, delete bookings**
+
 Experienced skydiver can Book a plane
 
 Experienced skydiver can Delete a booking
@@ -94,21 +95,25 @@ Editing a tandem skydive booking
 Deleting a tandem skydive booking
 
 **Epic 2: Admin can access and edit all models**
+
 Admin can manage all plane departure
 
 Admin can manage Course and tandem dates
 
 **Epic 3: Implement user login authentication**
+
 Account registration
 
 User can login
 
 **Epic 4: User Authentication**
+
 Design the registration page
 
 Design the login page
 
 **Epic 5: Experienced app area designs**
+
 View paginated list of plane departures
 
 Design the booking form for experienced app
@@ -116,6 +121,7 @@ Design the booking form for experienced app
 Design the experienced home page
 
 **Epic 6: Courses and tandems areas**
+
 Design the tandem booking page
 
 Design the frontend book a course page
@@ -125,6 +131,7 @@ Design the booking form in order to book a tandem
 Design the form page for booking a course
 
 **Epic 7: General frontend designs**
+
 Design the home page 
 
 Design the navigation bar
@@ -409,7 +416,333 @@ The rest of the images of skydivers were taken by me in my training to become a 
 
 ## Testing
 
-### Functional testing
+### Functional Testing
+
+#### Authentication
+
+<details>
+  <summary><strong>Ensure a user can sign up to the website</strong></summary>
+
+**Steps:**
+
+1. Navigate to [book a skydive](https://book-a-skydive-3bb0c8212a26.herokuapp.com/) and click Register
+2. Enter email, username, and password 
+3. Click Sign up
+
+**Expected:**
+
+You are now logged in and redirected to the Home Page with a notification at the top to confirm login.
+
+**Actual:**
+
+You are now logged in and redirected to the Home Page with a notification at the top to confirm login.
+
+</details>
+
+<details>
+  <summary><strong>Ensure a user can log in to the website</strong></summary>
+
+**Steps:**
+
+1. Navigate to [book a skydive](https://book-a-skydive-3bb0c8212a26.herokuapp.com/) and click login
+2. Enter username and password
+3. Click Sign In
+
+**Expected:**
+
+You are now logged in and redirected to the Home Page with a notification at the top to confirm login.
+
+**Actual:**
+
+You are now logged in and redirected to the Home Page with a notification at the top to confirm login.
+
+</details>
+
+<details>
+  <summary><strong>Ensure a user can sign out of the website</strong></summary>
+
+**Steps:**
+
+1. Log in to the website
+2. Click Log out
+3. Click Sign Out (to confirm)
+4. User is logged out, notification message should be visible
+
+**Expected:**
+
+You are now Logged out and redirected to the Home Page with a notification at the top to confirm logout.
+
+**Actual:**
+
+You are now logged out and redirected to the Home Page with a notification at the top to confirm logout.
+
+</details>
+
+#### Forms - Experienced
+
+<details>
+  <summary><strong>Ensure a logged in user can book a skydive within the experienced area</strong></summary>
+
+**Steps:**
+
+1. Log in, click the experienced link
+2. Click 'book now' on relevant departure
+3. Select jump type using the dropdown
+4. Click book now
+
+**Expected:**
+
+Page reloads and displays a notification message confirmation.
+
+**Actual:**
+
+Page reloads and displays a notification message confirmation.
+
+</details>
+
+<details>
+  <summary><strong>Ensure a logged in user can edit a skydive booking within the experienced area</strong></summary>
+
+**Steps:**
+
+1. Log in, click the experienced link
+2. Click 'book now' on relevant departure
+3. Select jump type using the dropdown
+4. Select update booking
+
+**Expected:**
+
+Page reloads and displays a notification message confirmation.
+
+**Actual:**
+
+Page reloads and displays a notification message confirmation.
+
+</details>
+
+<details>
+  <summary><strong>Ensure a logged in user can delete a skydive booking within the experienced area</strong></summary>
+
+**Steps:**
+
+1. Log in, click the experienced link
+2. Click 'book now' on relevant departure
+3. Select delete booking
+4. Click delete in confirmation modal
+
+**Expected:**
+
+Page reloads and displays a notification message confirmation.
+
+**Actual:**
+
+Page reloads and displays a notification message confirmation.
+
+</details>
+
+#### Forms - Courses
+
+<details>
+  <summary><strong>Ensure a logged in user can create a Course booking within the Courses area</strong></summary>
+
+**Steps:**
+
+1. Log in, click the courses link
+2. Click book now on relevant course
+3. Enter Full name, email, phone number, weight, and height
+4. Select confirm booking
+
+**Expected:**
+
+Redirected to the booking success page.
+
+**Actual:**
+
+Redirected to the booking success page.
+
+</details>
+
+<details>
+  <summary><strong>Ensure a logged in user can edit a course booking within the profile area</strong></summary>
+
+**Steps:**
+
+1. Log in, click the Profile link
+2. Under current bookings, click edit on the relevant booking
+3. Make changes to the form
+4. Click save changes
+
+**Expected:**
+
+Page reloads, notification confirming the change.
+
+**Actual:**
+
+Page reloads, notification confirming the change.
+
+</details>
+
+<details>
+  <summary><strong>Ensure a logged in user can delete a course booking within the profile area</strong></summary>
+
+**Steps:**
+
+1. Log in, click the Profile link
+2. Under current bookings, click delete on the relevant booking
+
+**Expected:**
+
+Page reloads, notification confirming the change. Course is no longer visible within profile page.
+
+**Actual:**
+
+Page reloads, notification confirming the change. Course is no longer visible within profile page.
+
+</details>
+
+#### Forms - Tandems
+
+<details>
+  <summary><strong>Ensure a logged in user can create a Tandem booking within the Tandem area</strong></summary>
+
+**Steps:**
+
+1. Log in, click the Tandems link
+2. Select a day, click next
+3. Select a time, click next
+4. Enter Full name, email, phone number, weight, and height
+5. Select confirm booking
+
+**Expected:**
+
+Redirected to the booking success page.
+
+**Actual:**
+
+Redirected to the booking success page.
+
+</details>
+
+<details>
+  <summary><strong>Ensure a logged in user can edit a Tandem booking within the profile area</strong></summary>
+
+**Steps:**
+
+1. Log in, click the Profile link
+2. Under current bookings, click edit on the relevant booking
+3. Make changes to the form
+4. Click save changes
+
+**Expected:**
+
+Page reloads, notification confirming the change.
+
+**Actual:**
+
+Page reloads, notification confirming the change.
+
+</details>
+
+<details>
+  <summary><strong>Ensure a logged in user can delete a Tandem booking within the profile area</strong></summary>
+
+**Steps:**
+
+1. Log in, click the Profile link
+2. Under current bookings, click delete on the relevant booking
+
+**Expected:**
+
+Page reloads, notification confirming the change. Tandem booking is no longer visible within profile page.
+
+**Actual:**
+
+Page reloads, notification confirming the change. Tandem booking is no longer visible within profile page.
+
+</details>
+
+#### Navigation Links
+
+Testing was performed to ensure all navigation links on the respective pages navigated to the correct pages as per design.
+
+- Home -> index.html
+- Tandems -> select_day.html
+- Courses -> list_courses.html
+- Experienced -> experienced/index.html
+- Profile -> userprofile.html
+- Contact Us -> contact.html
+- Logout -> Sign out all auth page
+- Login -> Sign in all auth page
+- Register -> Sign up all auth page
+
+All navigation links directed to the correct pages as expected.
+
+#### Admin Privileges
+
+<details>
+  <summary><strong>Ensure a superuser can add a Course</strong></summary>
+
+**Steps:**
+
+1. Navigate to the admin url
+2. Log in
+3. Click 'add' for the aff courses model
+4. Fill in fields and click Save
+5. Navigate to the courses url
+
+**Expected:**
+
+Newly added course is visible on the courses url.
+
+**Actual:**
+
+Newly added course is visible on the courses url.
+
+</details>
+
+<details>
+  <summary><strong>Ensure a superuser can add a Tandem date/timeslot</strong></summary>
+
+**Steps:**
+
+1. Navigate to the admin url
+2. Log in
+3. Click 'add' for the tandem days model
+4. Fill in fields and click Save
+5. Click 'add' for the tandem timeslot model
+6. Fill in fields and click Save
+
+**Expected:**
+
+Newly added tandem is visible on the dropdown menu with available time slots.
+
+**Actual:**
+
+Newly added tandem is visible on the dropdown menu with available time slots.
+
+</details>
+
+<details>
+  <summary><strong>Ensure a superuser can add an Experienced plane departure</strong></summary>
+
+**Steps:**
+
+1. Navigate to the admin url
+2. Log in
+3. Click 'add' for the 'jumpslots' model
+4. Fill in fields and click Save
+5. Navigate to the experienced url
+
+**Expected:**
+
+Newly added departure is visible on the experienced url.
+
+**Actual:**
+
+Newly added departure is visible on the experienced url.
+
+</details>
+
 ### Unit testing
 These tests check the validity of forms by ensuring that it behaves correctly with both valid and invalid input. One test verifies that the form is valid when provided with correct data, while the other confirms that the form rejects incorrect data.
 
