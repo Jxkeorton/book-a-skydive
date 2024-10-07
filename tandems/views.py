@@ -161,15 +161,12 @@ def edit_booking(request, booking_id):
     """
     booking = get_object_or_404(VisitorDetail, id=booking_id)
 
-    print("triggered edit course booking")
-
     if booking.user != request.user:
         messages.error(request, "You can only edit your own bookings!")
         return redirect('userprofile:user_profile')
 
     if request.method == 'POST':
         form = VisitorDetailForm(data=request.POST, instance=booking)
-        print(request.POST)
 
         if form.is_valid():
             form.save()
@@ -178,7 +175,7 @@ def edit_booking(request, booking_id):
             )
             return redirect('userprofile:user_profile')
         else:
-            print(form.errors)
+            messages.error('There was an error updating your booking, Please try again or contact us.')
     else:
         form = VisitorDetailForm(instance=booking)
 

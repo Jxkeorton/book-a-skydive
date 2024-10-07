@@ -10,8 +10,6 @@ $(document).ready(function(){
 
         const type = $(this).data('type');
 
-        console.log(phoneNumber);
-
         // Set values in the modal
         $('#full_name').val(fullName);
         $('#email').val(email);

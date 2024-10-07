@@ -45,7 +45,7 @@
 
             <!-- Weight -->
             <div class="mb-3 row">
-              <label for="{{ form.weight.id_for_label }}" class="col-sm-4 col-form-label">{{ form.weight.label }}</label>
+              <label for="{{ form.weight.id_for_label }}" class="col-sm-4 col-form-label">{{ form.weight.label }} kg</label>
               <div class="col-sm-8">
                 {{ form.weight }}
                 {% if form.weight.errors %}
@@ -56,7 +56,7 @@
 
             <!-- Height -->
             <div class="mb-3 row">
-              <label for="{{ form.height.id_for_label }}" class="col-sm-4 col-form-label">{{ form.height.label }}</label>
+              <label for="{{ form.height.id_for_label }}" class="col-sm-4 col-form-label">{{ form.height.label }} cm</label>
               <div class="col-sm-8">
                 {{ form.height }}
                 {% if form.height.errors %}

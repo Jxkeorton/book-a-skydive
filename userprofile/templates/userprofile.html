@@ -5,7 +5,9 @@
 <div class="container py-4">
     <h1 class="mb-4">User Profile</h1>
     <p>Welcome to your profile, <strong>{{ user.username }}</strong>!</p>
-    <p>Your email: <strong>{{ user.email }}</strong></p>
+    {% if user.email %}
+        <p>Your email: <strong>{{ user.email }}</strong></p>
+    {% endif %}
 
     <!-- Current Bookings Section -->
     <div class="card shadow-sm mb-4">

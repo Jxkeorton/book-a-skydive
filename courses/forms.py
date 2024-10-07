@@ -35,6 +35,9 @@ class VisitorDetailForm(forms.ModelForm):
 
     Fields: email, phone_number, weight, height, and full_name.
     """
+    MAX_WEIGHT = 100
+    MAX_HEIGHT = 200
+    
     class Meta:
         model = VisitorDetail
         fields = ['email', 'phone_number', 'weight', 'height', 'full_name']
@@ -51,3 +54,21 @@ class VisitorDetailForm(forms.ModelForm):
         if not re.match(r'^\d+$', phone_number):
             raise forms.ValidationError("Phone number must be numeric.")
         return phone_number
+    
+    def clean_weight(self):
+        """
+        Validates that the weight does not exceed the hardcoded maximum weight.
+        """
+        weight = self.cleaned_data.get('weight')
+        if weight > self.MAX_WEIGHT:
+            raise forms.ValidationError(f"Weight exceeds the maximum limit of {self.MAX_WEIGHT} kg.")
+        return weight
+
+    def clean_height(self):
+        """
+        Validates that the height does not exceed the hardcoded maximum height.
+        """
+        height = self.cleaned_data.get('height')
+        if height > self.MAX_HEIGHT:
+            raise forms.ValidationError(f"Height exceeds the maximum limit of {self.MAX_HEIGHT} cm.")
+        return height
