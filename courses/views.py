@@ -152,7 +152,7 @@ def edit_booking(request, booking_id):
     booking = get_object_or_404(VisitorDetail, id=booking_id)
 
     if booking.user != request.user:
-        messages.error(request, "You can only edit your own bookings!")
+        messages.error(request, "You can only edit your own bookings!!")
         return redirect('userprofile:user_profile')
 
     if request.method == 'POST':
