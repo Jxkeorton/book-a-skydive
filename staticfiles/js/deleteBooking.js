@@ -9,7 +9,7 @@ deleteButtons.forEach(button => {
         let bookingType = e.target.getAttribute("data-booking-type"); 
 
         if (bookingType === 'tandem') {
-            deleteConfirm.href = `/tandems/delete_tandem_booking/${bookingId}/`; // Tandem delete URL
+            deleteConfirm.href = `/tandems/delete_booking/${bookingId}/`; // Tandem delete URL
         } else if (bookingType === 'course') {
             deleteConfirm.href = `/course/delete_booking/${bookingId}/`; // Course delete URL
         } else {

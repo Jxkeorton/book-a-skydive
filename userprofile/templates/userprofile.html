@@ -35,10 +35,11 @@
                                             data-type="tandem">
                                         Edit
                                     </button>
-                                    <form action="{% url 'tandems:delete_booking' booking.id %}" method="post" style="display:inline;">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                    </form>
+                                    <button type="submit" class="btn btn-danger btn-sm btn-delete"
+                                    data-booking-id="{{ booking.id }}"
+                                    data-booking-type="tandem">
+                                        Delete
+                                    </button>
                                 </div>
                             </li>
                         {% endfor %}
@@ -66,10 +67,11 @@
                                             data-type="course">
                                         Edit
                                     </button>
-                                    <form action="{% url 'courses:delete_booking' course.id %}" method="post" style="display:inline;">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                    </form>
+                                    <button type="button" class="btn btn-danger btn-sm btn-delete"
+                                    data-booking-id="{{ course.id }}"
+                                    data-booking-type="course">
+                                        Delete
+                                    </button>
                                 </div>
                             </li>
                         {% endfor %}
@@ -149,9 +151,28 @@
     </div>
 </div>
 
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Booking?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete your booking? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a id="deleteConfirm" href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
 {% block extras %}
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script src="{% static 'js/editBookingModal.js' %}"></script>
-
-{% endblock %}
+<script src="{% static 'js/deleteBooking.js' %}"></script>
 {% endblock %}
