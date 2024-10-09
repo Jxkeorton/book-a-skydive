@@ -295,6 +295,11 @@ User authentication is enforced through Django’s built-in authentication syste
 
 ![Experienced Booking Form](docs/components-and-pages/experienced-booking-form.png)
 
+- Delete Modal (defensive programming)
+
+![Delete Modal](docs/components-and-pages/delete-modal.png)
+
+
 </details>
 
 <details>
@@ -305,6 +310,19 @@ User authentication is enforced through Django’s built-in authentication syste
 ![Logout](docs/components-and-pages/log-out.png)
 
 ![Register](docs/components-and-pages/register.png)
+
+</details>
+
+<details>
+<summary>Profile Page</summary>
+
+![Profile](docs/components-and-pages/profile.png)
+
+- Edit booking modal
+
+![Edit booking modal](docs/components-and-pages/edit-booking-modal.png)
+
+- Delete modal (Defensive Programming)
 
 </details>
 

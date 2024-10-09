@@ -1,5 +1,24 @@
 # Testing
 
+# Contents
+
+- [Functional Testing](#functional-testing)
+    - [Authentication](#authentication)
+    - [Forms - Experienced](#forms---experienced)
+    - [Forms - Courses](#forms---courses)
+    - [Forms - Tandems](#forms---tandems)
+    - [Navigation Links](#navigation-links)
+    - [Admin Privileges](#admin-privileges)
+- [Unit Testing](#unit-testing)
+- [Accessibility](#accessibility)
+- [Validator Testing](#validator-testing)
+    - [w3 HTML Validator](#w3-html-validator)
+    - [Pep8](#pep8)
+    - [JSHINT](#jshint)
+- [Lighthouse Report](#lighthouse-report)
+- [Responsiveness](#responsiveness)
+
+
 ## Functional Testing
 
 ### Authentication
@@ -358,6 +377,10 @@ JavaScript code was run through JSHINT javascript validator. There were a few se
 
 ## Lighthouse report
 
+Lighthouse highlighted the slow loading times of the large hero images. These are webp images and would require a more technical solution which can be looked at in the future. I decided the load times were more than okay and that high quality images were important for the business.
+
+![Lighthouse](./docs/lighthouse.png)
+
 ## Responsiveness
 All pages were tested to ensure responsiveness on screen sizes from 320px and upwards as defined in WCAG 2.1 Reflow criteria for responsive design on Chrome, Edge, Firefox and Opera browsers.
 
@@ -376,3 +399,11 @@ Website is responsive on all screen sizes and no images are pixelated or stretch
 Actual:
 
 Website behaved as expected.
+
+## Bug Fixes
+1. Javascript wasn’t working correctly in deployed code, I noticed using the response from the javascript file that was fetched that it was the old JS file and that I needed to run collectstatic in order for the new one to be deployed.
+I then also had to add the script back that I thought I did not need in order for the bootstrap modal to work correctly.
+
+2. Adding correct error messages to forms, they were throwing an error stopping the user from submitting without explaining the specific error. More error handling was implemented to solve this.
+
+3. When pressing the edit button on the experienced bookings in the profile page, the book now button did not update to the expected 'update booking'. I found it was navigating to the incorrect url path. After changing it to direct to the correct url pattern and ensuring the correct parameters were passed the update booking button was visible.
